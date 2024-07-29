@@ -1,0 +1,61 @@
+##frontend================================
+# dependencies
+frontent/node_modules
+frontent/.pnp
+frontent/.pnp.js
+
+# testing
+frontent/coverage
+
+# production
+frontent/build
+
+# misc
+frontent/.DS_Store
+frontent/.env.local
+frontent/.env.development.local
+frontent/.env.test.local
+frontent/.env.production.local
+frontent/npm-debug.log*
+frontent/yarn-debug.log*
+frontent/yarn-error.log*
+
+##backend===================================
+backend/.metadata/*
+backend/library_management/src/main/resources/application.properties
+backend/Servers/*
+backend/library_management/git
+
+HELP.md
+backend/target/
+!backend/library_management/.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+### STS ###
+backend/library_management/.apt_generated
+backend/library_management/.classpath
+backend/library_management/.factorypath
+backend/library_management/.project
+backend/library_management/.settings
+backend/library_management/.springBeans
+backend/library_management/.sts4-cache
+
+### IntelliJ IDEA ###
+backend/library_management/.idea
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+backend/library_management/build/
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+### VS Code ###
+backend/.vscode/
