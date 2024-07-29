@@ -1,24 +1,24 @@
 ##frontend================================
 # dependencies
-frontent/node_modules
-frontent/.pnp
-frontent/.pnp.js
+frontend/node_modules
+frontend/.pnp
+frontend/.pnp.js
 
 # testing
-frontent/coverage
+frontend/coverage
 
 # production
-frontent/build
+frontend/build
 
 # misc
-frontent/.DS_Store
-frontent/.env.local
-frontent/.env.development.local
-frontent/.env.test.local
-frontent/.env.production.local
-frontent/npm-debug.log*
-frontent/yarn-debug.log*
-frontent/yarn-error.log*
+frontend/.DS_Store
+frontend/.env.local
+frontend/.env.development.local
+frontend/.env.test.local
+frontend/.env.production.local
+frontend/npm-debug.log*
+frontend/yarn-debug.log*
+frontend/yarn-error.log*
 
 ##backend===================================
 backend/.metadata/*
