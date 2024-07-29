@@ -1,24 +1,24 @@
 ##frontend================================
 # dependencies
-frontend/node_modules
-frontend/.pnp
-frontend/.pnp.js
+frontend/library_management/node_modules
+frontend/library_management/.pnp
+frontend/library_management/.pnp.js
 
 # testing
-frontend/coverage
+frontend/library_management/coverage
 
 # production
-frontend/build
+frontend/library_management/build
 
 # misc
-frontend/.DS_Store
-frontend/.env.local
-frontend/.env.development.local
-frontend/.env.test.local
-frontend/.env.production.local
-frontend/npm-debug.log*
-frontend/yarn-debug.log*
-frontend/yarn-error.log*
+frontend/library_management/.DS_Store
+frontend/library_management/.env.local
+frontend/library_management/.env.development.local
+frontend/library_management/.env.test.local
+frontend/library_management/.env.production.local
+frontend/library_management/npm-debug.log*
+frontend/library_management/yarn-debug.log*
+frontend/library_management/yarn-error.log*
 
 ##backend===================================
 backend/.metadata/*
