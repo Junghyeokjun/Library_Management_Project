@@ -26,7 +26,7 @@ public class User {
 	//각 유저를 식별하는 ID입니다.
 	private long userId;
 	
-	//유저의 아이디입니다.
+	//유저의 이름입니다.
 	private String userName;
 
 	//유저의 비밀번호 입니다.

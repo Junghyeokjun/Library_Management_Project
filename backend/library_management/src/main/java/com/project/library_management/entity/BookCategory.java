@@ -10,7 +10,7 @@ import lombok.Setter;
 //CATEGORY_ID NOT NULL NUMBER 
 
 //어느 도서가 어느 카테고리를 가지고 있는지에 대한 엔티티클래스입니다.
-//이 클래스는 bookcategories 테이블과 매핑됩니다. 
+//이 클래스는 book_categories 테이블과 매핑됩니다. 
 
 @AllArgsConstructor
 @Setter

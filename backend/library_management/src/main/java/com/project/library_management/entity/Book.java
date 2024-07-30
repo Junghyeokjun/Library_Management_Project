@@ -17,7 +17,9 @@ import lombok.Setter;
 //AVAILABLE_COPIES          NUMBER        
 //TOTAL_COPIES              NUMBER        
 //CREATED_AT                TIMESTAMP(6)  
-//UPDATED_AT                TIMESTAMP(6)
+//UPDATED_AT                TIMESTAMP(6)  
+//IMAGE_PATH                VARCHAR2(255) 
+//PUBLISHER                 VARCHAR2(255) 
 
 
 //  도서정보를 나타내는 엔티티 클래스입니다.
@@ -55,4 +57,10 @@ public class Book {
 	
 	//해당 레코드가 마지막으로 수정된 날짜입니다.
 	private LocalDateTime updatedAt;
+	
+	//도서의 이미지경로입니다.
+	private String imagePath;
+	
+	//도서의 출판사입니다.
+	private String publisher;
 }
