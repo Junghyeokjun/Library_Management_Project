@@ -1,7 +1,6 @@
 import React from "react";
-import BookList from "../components/BookList";
-import FilterPanel from "../components/FilterPanel";
-
+import BookList from "../components/features/book/BookList";
+import FilterPanel from "../components/features/book/FilterPanel";
 const MainPage = () => {
   return (
     <>

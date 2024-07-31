@@ -7,6 +7,8 @@ import {
   Paper,
   Pagination,
   Box,
+  Button,
+  Container,
 } from "@mui/material";
 import Book from "./Book";
 
@@ -25,7 +27,7 @@ const rows = [
 export default function BasicTable() {
   return (
     //추후 스타일객체 외부이동
-    <Box
+    <Container
       sx={{
         display: "flex",
         flexDirection: "column",
@@ -37,8 +39,6 @@ export default function BasicTable() {
       <TableContainer
         component={Paper}
         sx={{
-          width: "70%",
-          "@media(max-width:899px)": { width: "100%" },
           mb: 2,
         }}
       >
@@ -55,8 +55,11 @@ export default function BasicTable() {
           </TableBody>
         </Table>
       </TableContainer>
-      {/* 추후에 페이지수랑 연동 */}
-      <Pagination count={10} shape="rounded" />
-    </Box>
+
+      <Container sx={{ display: "flex", justifyContent: "space-between" }}>
+        {/* 추후에 페이지수랑 연동 */}
+        <Pagination count={10} shape="rounded" />
+      </Container>
+    </Container>
   );
 }

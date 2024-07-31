@@ -12,7 +12,7 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import Copyright from "../lib/Copyright";
+import Copyright from "../../../lib/Copyright";
 
 //해당 component는 머티리얼 ui의 템플릿을 사용한 코드입니다.
 

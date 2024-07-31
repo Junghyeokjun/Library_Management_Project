@@ -2,7 +2,7 @@
 import {
   Box,
   Button,
-  Paper,
+  Container,
   Table,
   TableBody,
   TableCell,
@@ -34,9 +34,9 @@ const BookDetail = () => {
         }}
       >
         <Box sx={{ width: "100%", display: "flex", justifyContent: "center" }}>
-          <Box sx={{ width: "75%", py: 2 }}>
+          <Container sx={{ py: 2 }}>
             <h1>상세정보</h1>
-          </Box>
+          </Container>
         </Box>
         <Box
           sx={{
@@ -46,7 +46,7 @@ const BookDetail = () => {
             backgroundColor: "#eee",
           }}
         >
-          <Box
+          <Container
             sx={{
               width: "75%",
               py: 5,
@@ -77,7 +77,7 @@ const BookDetail = () => {
                 TITLE
               </p>
 
-              <Box sx={{ display: "flex" }}>
+              <Box sx={{ display: "flex", justifyContent: "space-between" }}>
                 <TableContainer sx={{ backgroundColor: "#eee", width: "70%" }}>
                   <Table>
                     <TableBody>
@@ -110,17 +110,24 @@ const BookDetail = () => {
                     </TableBody>
                   </Table>
                 </TableContainer>
-                <Box sx={{ display: "flex", alignItems: "end" }}>
-                  <Button
-                    variant="contained"
-                    sx={{ width: "100px", height: "40px" }}
-                  >
-                    대출
-                  </Button>
-                </Box>
+              </Box>
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "end",
+                  justifyContent: "end",
+                  mt: 5,
+                }}
+              >
+                <Button
+                  variant="contained"
+                  sx={{ width: "100px", height: "40px" }}
+                >
+                  대출
+                </Button>
               </Box>
             </Box>
-          </Box>
+          </Container>
         </Box>
       </Box>
     </Box>

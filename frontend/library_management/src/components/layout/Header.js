@@ -13,23 +13,18 @@ import PersonIcon from "@mui/icons-material/Person";
 import HomeIcon from "@mui/icons-material/Home";
 //해당 component는 머티리얼 ui의 템플릿을 사용한 코드입니다.
 
-const pages = ["회원 관리", "도서관리", "대출내역 관리"];
-const settings = ["마이페이지", "로그아웃"];
+const pages = ["회원 관리", "도서관리", "대출내역 조회"];
+const settings = ["회원정보 수정", "대출현황", "로그아웃"];
 
 function ResponsiveAppBar() {
-  const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
-  const handleOpenNavMenu = (event) => {
-    setAnchorElNav(event.currentTarget);
-  };
+  const handleOpenNavMenu = (event) => {};
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
   };
 
-  const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
-  };
+  const handleCloseNavMenu = () => {};
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);

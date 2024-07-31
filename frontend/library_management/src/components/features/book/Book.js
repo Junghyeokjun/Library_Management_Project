@@ -1,6 +1,6 @@
 import React from "react";
 import TableCell from "@mui/material/TableCell";
-import { Button } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 
 const Book = () => {
   //추후에 파라미터를 받는 형식으로 수정
@@ -20,38 +20,43 @@ const Book = () => {
         />
       </TableCell>
       <TableCell>
-        <div
-          style={{
+        <Box
+          sx={{
             display: "flex",
             flexDirection: "column",
+            justifyContent: "end",
           }}
         >
           {/* 추후 제목에 링크 */}
-          <h1>제목</h1>
-          <div>
-            <p>-저자:</p>
-            <p>-출판연도:</p>
-            <p>-출판사:</p>
-          </div>
-        </div>
+          <Typography
+            sx={{ fontWeight: "bold", fontSize: "2rem", mb: "1.2rem" }}
+          >
+            제목
+          </Typography>
+          <Box>
+            <Typography>-저자:</Typography>
+            <Typography>-출판연도:</Typography>
+            <Typography>-출판사:</Typography>
+          </Box>
+        </Box>
       </TableCell>
       <TableCell sx={{ width: "180px" }}>
-        <div
-          style={{
+        <Box
+          sx={{
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
-            justifyItems: "end",
+            justifyContent: "end",
           }}
         >
-          <div
-            style={{ width: "90px", display: "flex", justifyContent: "end" }}
-          >
-            <p>대출</p>
-          </div>
+          <Box sx={{ width: "90px", display: "flex", justifyContent: "end" }}>
+            <Typography variant="h6" sx={{ fontWeight: "bold" }}>
+              대출
+            </Typography>
+          </Box>
           {/* 원클릭 함수로 제작하여 제목과 함께 링크 */}
           <Button variant="contained">상세보기</Button>
-        </div>
+        </Box>
       </TableCell>
     </>
   );
