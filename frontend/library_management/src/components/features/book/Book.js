@@ -2,7 +2,16 @@ import React from "react";
 import TableCell from "@mui/material/TableCell";
 import { Box, Button, Typography } from "@mui/material";
 
-const Book = () => {
+const Book = ({
+  id,
+  title,
+  author,
+  publishedDate,
+  imagePath,
+  publisher,
+  availableCopies,
+  totalCopies,
+}) => {
   //추후에 파라미터를 받는 형식으로 수정
   return (
     <>
@@ -31,12 +40,12 @@ const Book = () => {
           <Typography
             sx={{ fontWeight: "bold", fontSize: "2rem", mb: "1.2rem" }}
           >
-            제목
+            제목{title}
           </Typography>
           <Box>
-            <Typography>-저자:</Typography>
-            <Typography>-출판연도:</Typography>
-            <Typography>-출판사:</Typography>
+            <Typography>-저자:{id}</Typography>
+            <Typography>-출판연도:{publishedDate}</Typography>
+            <Typography>-출판사:{author}</Typography>
           </Box>
         </Box>
       </TableCell>

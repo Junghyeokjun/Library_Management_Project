@@ -1,10 +1,10 @@
-import * as React from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import { Box, Pagination, TableContainer } from "@mui/material";
+import { useState } from "react";
 
 // Generate Order Data
 function createData(id, date, name, shipTo, paymentMethod, amount) {
@@ -54,6 +54,13 @@ const LoanHistory = () => {
       212.79
     ),
   ];
+  const [loanList, setLoanList] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageCount, setPageCount] = useState(10);
+
+  const handlePageChange = (event, value) => {
+    setCurrentPage(value);
+  };
 
   return (
     <>
@@ -80,7 +87,12 @@ const LoanHistory = () => {
         </Table>
       </TableContainer>
       <Box sx={{ display: "flex", justifyContent: "center", my: 2 }}>
-        <Pagination count={10} shape="rounded" />
+        <Pagination
+          count={pageCount}
+          page={currentPage}
+          onChange={handlePageChange}
+          shape="rounded"
+        />
       </Box>
     </>
   );

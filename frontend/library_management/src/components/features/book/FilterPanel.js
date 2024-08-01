@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Typography,
@@ -29,6 +29,15 @@ const CategoryTabs = () => {
     "역사",
   ];
 
+  const [category, setCategory] = useState(0);
+  const [keyword, setKeyword] = useState("");
+  const [inputKeyword, setInputKeyword] = useState("");
+  const [option, setOption] = useState("title");
+
+  const handleSearchClick = (event) => {
+    setKeyword(inputKeyword);
+  };
+
   return (
     <Box
       sx={{
@@ -55,9 +64,10 @@ const CategoryTabs = () => {
         }}
       >
         <Tabs
-          value={0}
+          value={category}
           variant="scrollable"
           scrollButtons={false} // 스크롤 버튼 숨기기
+          onChange={(event, value) => setCategory(value)}
           aria-label="category tabs"
           sx={{
             width: "100%",
@@ -74,14 +84,26 @@ const CategoryTabs = () => {
       <Box sx={{ display: "flex", alignItems: "center", gap: 2, ml: 2, mb: 1 }}>
         <FormControl variant="outlined" sx={{ minWidth: 120 }}>
           <InputLabel>검색 유형</InputLabel>
-          <Select defaultValue="title" label="검색 유형">
+          <Select
+            value={option}
+            onChange={(event) => setOption(event.target.value)}
+            label="검색 유형"
+          >
             <MenuItem value="title">제목</MenuItem>
             <MenuItem value="author">저자</MenuItem>
             <MenuItem value="publisher">출판사</MenuItem>
           </Select>
         </FormControl>
-        <TextField label="검색" variant="outlined" fullWidth />
-        <Button variant="contained">검색</Button>
+        <TextField
+          label="검색"
+          variant="outlined"
+          value={inputKeyword}
+          onChange={(event) => setInputKeyword(event.target.value)}
+          fullWidth
+        />
+        <Button variant="contained" onClick={handleSearchClick}>
+          검색
+        </Button>
       </Box>
     </Box>
   );

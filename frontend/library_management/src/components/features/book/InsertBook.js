@@ -29,6 +29,8 @@ const categories = [
   { value: 10, label: "역사" },
 ];
 
+//이하 메서드는 추후 모듈로 분리예정
+
 const InsertBook = () => {
   const [bookDetails, setBookDetails] = useState({
     title: "",
@@ -73,7 +75,7 @@ const InsertBook = () => {
     formData.append("tableOfContents", bookDetails.tableOfContents);
     formData.append("category", bookDetails.category);
 
-    // 예: fetch로 서버에 데이터 전송
+    // 업로드부분
     fetch("/api/books", {
       method: "POST",
       body: formData,

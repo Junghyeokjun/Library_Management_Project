@@ -33,8 +33,8 @@ function App() {
         {/* <BookDetailPage /> */}
         {/* <SignInPage /> */}
         {/* <SignUpPage /> */}
-        <BookMenagement />
-        {/* <MyPage /> */}
+        {/* <BookMenagement /> */}
+        <MyPage />
         {/* <LoanList /> */}
         {/* <UserList /> */}
         {/* <InsertBook /> */}

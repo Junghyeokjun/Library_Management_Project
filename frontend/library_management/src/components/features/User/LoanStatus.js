@@ -17,6 +17,7 @@ const LoanStatus = () => {
       >
         대여한 책이 없습니다
       </Typography>
+      {/* 추후에 대여한 책여부에 따라 나뉘도록 추가예정 */}
       {/* <Box
         sx={{
           border: "1px solid #eee",

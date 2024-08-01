@@ -11,6 +11,11 @@ import React, { useRef } from "react";
 
 const BookIntro = () => {
   //소개글 버튼 태그입니다.
+
+  const booKContent = "내용";
+  const authorContent = "작성자";
+  const tableofContent = "목차";
+
   const IntroBtn = styled(Button)(() => ({
     width: "200px",
   }));
@@ -25,9 +30,9 @@ const BookIntro = () => {
   const scrollIntro = (target) =>
     target.current.scrollIntoView({ behavior: "smooth" });
 
-  const bookIntro = useRef(null);
-  const authorIntro = useRef(null);
-  const tableOfContent = useRef(null);
+  const bookIntroRef = useRef(null);
+  const authorIntroRef = useRef(null);
+  const tableOfContentRef = useRef(null);
 
   return (
     <Box>
@@ -40,18 +45,22 @@ const BookIntro = () => {
         }}
       >
         <ButtonGroup variant="outlined" aria-label="Basic button group">
-          <IntroBtn onClick={() => scrollIntro(bookIntro)}>책소개</IntroBtn>
-          <IntroBtn onClick={() => scrollIntro(authorIntro)}>저자소개</IntroBtn>
-          <IntroBtn onClick={() => scrollIntro(tableOfContent)}>목차</IntroBtn>
+          <IntroBtn onClick={() => scrollIntro(bookIntroRef)}>책소개</IntroBtn>
+          <IntroBtn onClick={() => scrollIntro(authorIntroRef)}>
+            저자소개
+          </IntroBtn>
+          <IntroBtn onClick={() => scrollIntro(tableOfContentRef)}>
+            목차
+          </IntroBtn>
         </ButtonGroup>
       </Box>
       <Container>
-        <SubTitle ref={bookIntro}>책 소개</SubTitle>
-        <IntroContent>내용</IntroContent>
-        <SubTitle ref={authorIntro}>저자 소개</SubTitle>
-        <IntroContent>내용</IntroContent>
-        <SubTitle ref={tableOfContent}>목차</SubTitle>
-        <IntroContent>내용</IntroContent>
+        <SubTitle ref={bookIntroRef}>책 소개</SubTitle>
+        <IntroContent>{booKContent}</IntroContent>
+        <SubTitle ref={authorIntroRef}>저자 소개</SubTitle>
+        <IntroContent>{authorContent}</IntroContent>
+        <SubTitle ref={tableOfContentRef}>목차</SubTitle>
+        <IntroContent>{tableofContent}</IntroContent>
       </Container>
     </Box>
   );

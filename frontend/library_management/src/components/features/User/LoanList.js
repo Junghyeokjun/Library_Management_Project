@@ -9,7 +9,7 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 
 function createData(id, date, name, shipTo, paymentMethod, amount) {
   return { id, date, name, shipTo, paymentMethod, amount };
@@ -58,6 +58,20 @@ const LoanList = () => {
       212.79
     ),
   ];
+
+  const [loanList, setLoanList] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageCount, setPageCount] = useState(10);
+  //검색기능 추가시
+
+  const [keyword, setKeyword] = useState("");
+  const [inputKeyword, setInputKeyword] = useState("");
+  const [option, setOption] = useState("title");
+
+  const handlePageChange = (event, value) => {
+    setCurrentPage(value);
+  };
+
   return (
     <>
       <TableContainer sx={{ border: "1px solid #eee", borderRadius: "10px" }}>
@@ -85,7 +99,12 @@ const LoanList = () => {
         </Table>
       </TableContainer>
       <Box sx={{ display: "flex", justifyContent: "center", my: 2 }}>
-        <Pagination count={10} shape="rounded" />
+        <Pagination
+          count={pageCount}
+          page={currentPage}
+          onChange={handlePageChange}
+          shape="rounded"
+        />
       </Box>
     </>
   );
