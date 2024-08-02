@@ -18,7 +18,7 @@ const Book = ({
       <TableCell sx={{ width: "120px" }}>
         <img
           className="book-image"
-          src="https://mui.com/static/images/templates/dashboard.png"
+          src={imagePath}
           alt="도서 이미지"
           style={{
             width: "118px",
@@ -40,12 +40,12 @@ const Book = ({
           <Typography
             sx={{ fontWeight: "bold", fontSize: "2rem", mb: "1.2rem" }}
           >
-            제목{title}
+            {title}
           </Typography>
           <Box>
-            <Typography>-저자:{id}</Typography>
+            <Typography>-저자:{author}</Typography>
             <Typography>-출판연도:{publishedDate}</Typography>
-            <Typography>-출판사:{author}</Typography>
+            <Typography>-출판사:{publisher}</Typography>
           </Box>
         </Box>
       </TableCell>
@@ -60,7 +60,7 @@ const Book = ({
         >
           <Box sx={{ width: "90px", display: "flex", justifyContent: "end" }}>
             <Typography variant="h6" sx={{ fontWeight: "bold" }}>
-              대출
+              {availableCopies}/{totalCopies} 대출
             </Typography>
           </Box>
           {/* 원클릭 함수로 제작하여 제목과 함께 링크 */}

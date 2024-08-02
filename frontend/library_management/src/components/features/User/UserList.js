@@ -12,57 +12,8 @@ import {
 } from "@mui/material";
 import React, { useState } from "react";
 
-function createData(id, date, name, shipTo, paymentMethod, amount) {
-  return { id, date, name, shipTo, paymentMethod, amount };
-}
-
-const UserList = () => {
-  const rows = [
-    createData(
-      0,
-      "16 Mar, 2019",
-      "Elvis Presley",
-      "Tupelo, MS",
-      "VISA ⠀•••• 3719",
-      312.44
-    ),
-    createData(
-      1,
-      "16 Mar, 2019",
-      "Paul McCartney",
-      "London, UK",
-      "VISA ⠀•••• 2574",
-      866.99
-    ),
-    createData(
-      2,
-      "16 Mar, 2019",
-      "Tom Scholz",
-      "Boston, MA",
-      "MC ⠀•••• 1253",
-      100.81
-    ),
-    createData(
-      3,
-      "16 Mar, 2019",
-      "Michael Jackson",
-      "Gary, IN",
-      "AMEX ⠀•••• 2000",
-      654.39
-    ),
-    createData(
-      4,
-      "15 Mar, 2019",
-      "Bruce Springsteen",
-      "Long Branch, NJ",
-      "VISA ⠀•••• 5919",
-      212.79
-    ),
-  ];
-
-  const [userList, setUserList] = useState([]);
+const UserList = ({ users, pageCount, readUsers, removeUser }) => {
   const [currentPage, setCurrentPage] = useState(1);
-  const [pageCount, setPageCount] = useState(10);
   //검색기능 추가시
 
   const [keyword, setKeyword] = useState("");
@@ -71,8 +22,12 @@ const UserList = () => {
 
   const handlePageChange = (event, value) => {
     setCurrentPage(value);
+    readUsers({ page: value });
   };
 
+  const handelRemoveClick = (id) => {
+    removeUser(id);
+  };
   return (
     <>
       <TableContainer sx={{ border: "1px solid #eee", borderRadius: "10px" }}>
@@ -88,17 +43,18 @@ const UserList = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row) => (
-              <TableRow key={row.id}>
-                <TableCell sx={{ Height: "53px" }}>{row.name}</TableCell>
-                <TableCell>{row.shipTo}</TableCell>
-                <TableCell>{row.paymentMethod}</TableCell>
-                <TableCell>{row.paymentMethod}</TableCell>
-                <TableCell>{row.paymentMethod}</TableCell>
+            {users.map((user) => (
+              <TableRow key={user.userId}>
+                <TableCell sx={{ Height: "53px" }}>{user.userId}</TableCell>
+                <TableCell>{user.userName}</TableCell>
+                <TableCell>{user.email}</TableCell>
+                <TableCell>{user.loanCount}</TableCell>
+                <TableCell>{user.updatedAt}</TableCell>
                 <TableCell align="right">
                   <Button
                     variant="contained"
                     color="error"
+                    onClick={() => handelRemoveClick(user.userId)}
                     sx={{ width: "100px", height: "40px", mx: 2 }}
                   >
                     탈퇴

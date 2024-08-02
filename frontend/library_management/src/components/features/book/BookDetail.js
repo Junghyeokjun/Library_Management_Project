@@ -12,12 +12,30 @@ import {
 } from "@mui/material";
 import React from "react";
 
-const BookDetail = () => {
+const BookDetail = ({ book }) => {
+  const {
+    id,
+    title,
+    author,
+    publishedDate,
+    imagePath,
+    publisher,
+    availableCopies,
+    totalCopies,
+  } = book;
+
+  const isDisabled = availableCopies === totalCopies;
+
   const details = [
-    { label: "저자", value: "아무개" },
-    { label: "출판사", value: "제작" },
-    { label: "출판일", value: "오늘" },
-    { label: "대출현황", value: "대출불가 (5/5)" },
+    { label: "저자", value: author },
+    { label: "출판사", value: publisher },
+    { label: "출판일", value: publishedDate },
+    {
+      label: "대출현황",
+      value: `${
+        isDisabled ? "대출불가 " : "대출가능 "
+      }(${availableCopies}/${totalCopies})`,
+    },
   ];
   return (
     <Box
@@ -55,7 +73,7 @@ const BookDetail = () => {
             }}
           >
             <img
-              src="https://mui.com/static/images/templates/dashboard.png"
+              src={imagePath}
               alt="도서 이미지"
               style={{
                 width: "255px",
@@ -74,7 +92,7 @@ const BookDetail = () => {
                   paddingBottom: 5,
                 }}
               >
-                TITLE
+                {title}
               </p>
 
               <Box sx={{ display: "flex", justifyContent: "space-between" }}>
@@ -122,6 +140,7 @@ const BookDetail = () => {
                 <Button
                   variant="contained"
                   sx={{ width: "100px", height: "40px" }}
+                  disabled={isDisabled}
                 >
                   대출
                 </Button>

@@ -17,6 +17,11 @@ const GET_LOAN_LIST = "loan/GET_LOAN_LIST";
 const GET_LOAN_LIST_SUCCESS = "loan/GET_LOAN_LIST_SUCCESS";
 const GET_LOAN_LIST_FAILURE = "loan/GET_LOAN_LIST_FAILURE";
 
+//대출 현황 정보 리스트를 획득하는 액션입니다.
+const GET_LOAN_STATUS = "loan/GET_LOAN_STATUS";
+const GET_LOAN_STATUS_SUCCESS = "loan/GET_LOAN_STATUS_SUCCESS";
+const GET_LOAN_STATUS_FAILURE = "loan/GET_LOAN_STATUS_FAILURE";
+
 //대출정보 추가메서드입니다.
 export const addLoan = createRequestThunk(ADD_LOAN, postLoan);
 
@@ -26,7 +31,11 @@ export const modifyLoan = createRequestThunk(MODIFY_LOAN, putLoan);
 //대출정보 리스트 획득 메서드입니다.
 export const readLoans = createRequestThunk(GET_LOAN_LIST, getLoanList);
 
+//대출 현황 정보 리스트 획득 메서드입니다.
+export const readLoadStatus = createRequestThunk(GET_LOAN_STATUS, getLoanList);
+
 const initstate = {
+  loanStatus: [],
   loanList: [],
   pageCount: 1,
 };
@@ -61,10 +70,26 @@ const loan = handleActions(
       return {
         ...state,
         loanList,
+        pageCount,
       };
     },
     [GET_LOAN_LIST_FAILURE]: (state, { payload }) => {
       console.log(GET_LOAN_LIST_FAILURE);
+      console.log(payload);
+      return state;
+    },
+
+    //도서 현황 정보 리스트 획득 메서드의 결과를 처리하는 리듀서 메서드입니다.
+    [GET_LOAN_STATUS_SUCCESS]: (state, { payload }) => {
+      const { loanList, pageCount } = payload;
+      return {
+        ...state,
+        loanStatus: loanList,
+        pageCount,
+      };
+    },
+    [GET_LOAN_STATUS_FAILURE]: (state, { payload }) => {
+      console.log(GET_LOAN_STATUS_FAILURE);
       console.log(payload);
       return state;
     },

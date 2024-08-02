@@ -36,6 +36,9 @@ public class UserDto {
 	//유저 정보를 마지막으로 수정한 날짜입니다.
 	private LocalDateTime updatedAt;
 	
+	//유저의 대출권수입니다.
+	private long loanCount;
+	
 	//User 엔티티를 이용해 데이터를 입력하는 세터함수입니다.
 	public void setUser(User user) {
 		this.setUserId(user.getUserId());

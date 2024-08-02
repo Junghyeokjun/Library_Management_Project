@@ -6,15 +6,13 @@ import MainPage from "./pages/MainPage";
 import BookDetail from "./components/features/book/BookDetail";
 import SignInPage from "./pages/SignInPage";
 import SignUpPage from "./pages/SingUpPage";
-import BookIntro from "./components/features/book/BookIntro";
 import BookDetailPage from "./pages/BookDetailPage";
-import UserInfo from "./components/features/User/UserInfo";
 import MyPage from "./pages/MyPage";
-import LoanList from "./components/features/User/LoanList";
-import UserList from "./components/features/User/UserList";
-import InsertBook from "./components/features/book/InsertBook";
 import BookMenagement from "./components/features/book/BookManagement";
 import { Box } from "@mui/material";
+import BooKManagementPage from "./pages/BooKManagementPage";
+import UserListPage from "./pages/UserListPage";
+import LoanListPage from "./pages/LoanListPage";
 function App() {
   const [api, setApi] = useState("");
 
@@ -29,14 +27,14 @@ function App() {
     <Box sx={{ minHeight: "100vh", display: "flex", flexDirection: "column" }}>
       <Header />
       <Box sx={{ flexGrow: 1 }}>
-        <MainPage />
+        {/* <MainPage /> */}
         {/* <BookDetailPage /> */}
         {/* <SignInPage /> */}
         {/* <SignUpPage /> */}
-        {/* <BookMenagement /> */}
+        {/* <BooKManagementPage /> */}
         {/* <MyPage /> */}
-        {/* <LoanList /> */}
-        {/* <UserList /> */}
+        <LoanListPage />
+        {/* <UserListPage /> */}
         {/* <InsertBook /> */}
       </Box>
       <Footer />

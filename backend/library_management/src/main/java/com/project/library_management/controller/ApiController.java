@@ -1,6 +1,7 @@
 package com.project.library_management.controller;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.project.library_management.dto.BookDto;
 import com.project.library_management.dto.LoanDto;
 import com.project.library_management.dto.SearchDto;
+import com.project.library_management.dto.UserDto;
 
 @RestController
 @RequestMapping("/api")
@@ -43,13 +45,14 @@ public class ApiController {
 		book.setPublishedDate(LocalDate.now());
 		book.setAvailableCopies(3);
 		book.setTotalCopies(3);
+		book.setImagePath("https://www.google.com/logos/doodles/2024/paris-games-sailing-6753651837110529.4-law.gif");
 		book.setBookIntro("책소개입니다 테스트용으로");
 		book.setAuthorIntro("저자입니다 테스트용으로");
 		book.setTableOfContents("목차입니다 테스트용으로");
 
 		return book;
 	}
-	
+
 	// POST: /api/book
 	// 해당 도서정보를 DB에 저장
 	@PostMapping("/book")
@@ -70,7 +73,7 @@ public class ApiController {
 
 		return "PUT_BOOK_SUCCESS";
 	}
-	
+
 	// DELETE: /api/book?id=
 	// 해당 도서정보를 DB에서 수정
 	@DeleteMapping("/book")
@@ -81,80 +84,138 @@ public class ApiController {
 
 		return "DELETE_BOOK_SUCCESS";
 	}
-	
+
 	// GET: /api/booklist?category= & keyword= & option= & page=
 	// 해당 조건에 맞는 도서 정보 리스트 반환
 	@GetMapping("/booklist")
 	public Map<String, Object> getBookList(@ModelAttribute SearchDto search) {
 		System.out.println(search);
-		
-		Map<String, Object> data=new HashMap<String, Object>();
-		
-		BookDto book ;
-		List<BookDto> books=new ArrayList<BookDto>();
+
+		Map<String, Object> booksData = new HashMap<String, Object>();
+
+		BookDto book;
+		List<BookDto> books = new ArrayList<BookDto>();
 		for (int i = 0; i < 5; i++) {
-			book= new BookDto();
-			book.setTitle("테스트용"+i);
-			book.setAuthor("테스트저자"+i);
-			book.setPublisher("테스트출판"+i);
-			book.setBookId(1);
+			book = new BookDto();
+			book.setTitle("테스트용" + i);
+			book.setAuthor("테스트저자" + i);
+			book.setPublisher("테스트출판" + i);
+			book.setBookId(i);
 			book.setPublishedDate(LocalDate.now());
 			book.setAvailableCopies(3);
 			book.setTotalCopies(3);
-			book.setBookIntro("책소개입니다 테스트용으로"+i);
-			book.setAuthorIntro("저자입니다 테스트용으로"+i);
-			book.setTableOfContents("목차입니다 테스트용으로"+i);
+			book.setImagePath(
+					"https://www.google.com/logos/doodles/2024/paris-games-sailing-6753651837110529.4-law.gif");
+			book.setBookIntro("책소개입니다 테스트용으로" + i);
+			book.setAuthorIntro("저자입니다 테스트용으로" + i);
+			book.setTableOfContents("목차입니다 테스트용으로" + i);
 			books.add(book);
 		}
-		
-		data.put("bookList", books);
-		data.put("pageCount",5);
-		
-		return data;
+
+		booksData.put("bookList", books);
+		booksData.put("pageCount", 13);
+
+		return booksData;
+	}
+
+	// POST: /api/loan
+	// 해당 대출정보를 DB에 저장
+	@PostMapping("/loan")
+	public String createLoan(@RequestBody LoanDto loan) {
+
+		System.out.println("createLoan");
+		System.out.println(loan);
+
+		return "POST_LOAN_SUCCESS";
+	}
+
+	// PUT: /api/loan
+	// 해당 대출정보를 DB에서 수정
+	@PutMapping("/loan")
+	public String updateLoan(@RequestBody long id) {
+
+		System.out.println("updateLoan");
+		System.out.println(id);
+
+		return "PUT_LOAN_SUCCESS";
+	}
+
+	// GET: /api/loanlist?id= & page= & paging= & returned=
+	// 해당 조건에 맞는 도서 정보 리스트 반환
+	@GetMapping("/loanlist")
+	public Map<String, Object> getloanList(@ModelAttribute SearchDto search) {
+		System.out.println(search);
+		LoanDto loan;
+
+		Map<String, Object> loansData = new HashMap<String, Object>();
+
+		List<LoanDto> loans = new ArrayList<LoanDto>();
+		for (int i = 0; i < search.getPaging(); i++) {
+			loan = new LoanDto();
+			loan.setLoanId(i);
+			loan.setUserId(i);
+			loan.setBookId(i);
+			loan.setLoanDate(LocalDate.now());
+			loan.setReturnDate(LocalDate.now());
+			loan.setOverDue('n');
+			loan.setTitle("testtitle" + i);
+			loan.setImagePath(
+					"https://www.google.com/logos/doodles/2024/paris-games-sailing-6753651837110529.4-law.gif");
+			loan.setAuthor("test" + i);
+			loans.add(loan);
+		}
+
+		loansData.put("loanList", loans);
+		loansData.put("pageCount", 4);
+
+		return loansData;
+	}
+
+	// GET: /api/user?id=
+	// 도서번호에 해당하는 도서 정보 반환
+	@GetMapping("/user")
+	public UserDto getUser(@RequestParam long id) {
+		System.out.println(id);
+		UserDto user = new UserDto();
+		user.setUserName("테스트");
+		user.setEmail("이메일");
+		user.setPassword("sss");
+
+		return user;
 	}
 	
-	// POST: /api/loan
-		// 해당 대출정보를 DB에 저장
-		@PostMapping("/loan")
-		public String createLoan(@RequestBody LoanDto loan) {
+	// DELETE: /api/user?id=
+	// 도서번호에 해당하는 도서 정보 반환
+	@DeleteMapping("/user")
+	public String deleteUser(@RequestParam long id) {
+		System.out.println(id);
 
-			System.out.println("createLoan");
-			System.out.println(loan);
-			
-			return "POST_LOAN_SUCCESS";
+		return "DELETE_USER_SUCCESS";
+	}
+
+	// GET: /api/userlist?page=&paging=
+	// 도서번호에 해당하는 도서 정보 반환
+	@GetMapping("/userlist")
+	public Map<String, Object> getUserList(@ModelAttribute SearchDto search) {
+		System.out.println(search);
+		UserDto user;
+
+		Map<String, Object> usersData = new HashMap<String, Object>();
+
+		List<UserDto> users = new ArrayList<UserDto>();
+		for (int i = 0; i < search.getPaging(); i++) {
+			user=new UserDto();
+			user.setUserId(i);
+			user.setUserName("테스트"+i);
+			user.setEmail("이메일"+i);
+			user.setLoanCount(i);
+			user.setUpdatedAt(LocalDateTime.now());
+			users.add(user);
 		}
 
-		// PUT: /api/loan
-		// 해당 대출정보를 DB에서 수정
-		@PutMapping("/loan")
-		public String updateLoan(@RequestBody long id) {
+		usersData.put("userList", users);
+		usersData.put("pageCount", 4);
 
-			System.out.println("updateLoan");
-			System.out.println(id);
-
-			return "PUT_LOAN_SUCCESS";
-		}
-		
-		// GET: /api/loanlist?id= & page= & paging= & returned= 
-		// 해당 조건에 맞는 도서 정보 리스트 반환
-		@GetMapping("/loanlist")
-		public List<LoanDto> getloanList(@ModelAttribute SearchDto search) {
-			System.out.println(search);
-			LoanDto loan ;
-			List<LoanDto> loans=new ArrayList<LoanDto>();
-			for (int i = 0; i < 5; i++) {
-				loan= new LoanDto();
-				loan.setLoanId(i);
-				loan.setUserId(i);
-				loan.setBookId(i);
-				loan.setLoanDate(LocalDate.now());
-				loan.setReturnDate(LocalDate.now());
-				loan.setOverDue('n');
-				loan.setTitle("testtitle"+i);
-				loan.setAuthor("test"+i);
-			
-			}
-
-			return loans;
-		}
+		return usersData;
+	}
 }

@@ -2,13 +2,13 @@ import { Box, Button, Grid, Paper, Typography } from "@mui/material";
 import LockIcon from "@mui/icons-material/Lock";
 import React from "react";
 
-const UserInfo = ({ user }) => {
+const UserInfo = ({ user, readuser }) => {
   return (
     <>
       <Paper elevation={3} sx={{ p: 4 }}>
         <Box sx={{ display: "flex", alignItems: "center", mb: 3 }}>
           <Box>
-            <Typography variant="h5">{user.name}</Typography>
+            <Typography variant="h5">{user.userName}</Typography>
           </Box>
         </Box>
         <Grid container spacing={2}>

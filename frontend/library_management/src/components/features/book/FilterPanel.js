@@ -40,11 +40,16 @@ const FilterPanel = ({ onReadBooks, pageCount, children }) => {
   //페이지 전환시 이벤트
   const handlePageChange = (event, value) => {
     setCurrentPage(value);
-    onReadBooks(keyword, category, option, value);
+    onReadBooks({
+      category: category,
+      keyword: keyword,
+      option: option,
+      page: value,
+    });
   };
   //검색버튼 클릭시 이벤트
   const handleSearchClick = (event) => {
-    onReadBooks(category, inputKeyword, option);
+    onReadBooks({ category: category, keyword: inputKeyword, option: option });
     setKeyword(inputKeyword);
     setInputKeyword("");
     setCurrentPage(1);
@@ -52,7 +57,7 @@ const FilterPanel = ({ onReadBooks, pageCount, children }) => {
   //카테고리 전환시 이벤트
   const handleTabsChange = (event, value) => {
     setCategory(value);
-    onReadBooks(keyword, value, option);
+    onReadBooks({ category: value, keyword: keyword, option: option });
     setCurrentPage(1);
   };
 

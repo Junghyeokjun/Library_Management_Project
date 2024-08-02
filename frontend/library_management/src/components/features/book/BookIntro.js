@@ -9,12 +9,10 @@ import {
 import SubTitle from "../../common/SubTitle";
 import React, { useRef } from "react";
 
-const BookIntro = () => {
+const BookIntro = ({ book }) => {
   //소개글 버튼 태그입니다.
 
-  const booKContent = "내용";
-  const authorContent = "작성자";
-  const tableofContent = "목차";
+  const { bookIntro, authorIntro, tableOfContents } = book;
 
   const IntroBtn = styled(Button)(() => ({
     width: "200px",
@@ -35,7 +33,7 @@ const BookIntro = () => {
   const tableOfContentRef = useRef(null);
 
   return (
-    <Box>
+    <Box sx={{ mb: 5 }}>
       <Box
         sx={{
           display: "flex",
@@ -56,11 +54,11 @@ const BookIntro = () => {
       </Box>
       <Container>
         <SubTitle ref={bookIntroRef}>책 소개</SubTitle>
-        <IntroContent>{booKContent}</IntroContent>
+        <IntroContent>{bookIntro}</IntroContent>
         <SubTitle ref={authorIntroRef}>저자 소개</SubTitle>
-        <IntroContent>{authorContent}</IntroContent>
+        <IntroContent>{authorIntro}</IntroContent>
         <SubTitle ref={tableOfContentRef}>목차</SubTitle>
-        <IntroContent>{tableofContent}</IntroContent>
+        <IntroContent>{tableOfContents}</IntroContent>
       </Container>
     </Box>
   );

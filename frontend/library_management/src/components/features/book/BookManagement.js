@@ -11,59 +11,24 @@ import {
 } from "@mui/material";
 import React, { useState } from "react";
 
-function createData(id, date, name, shipTo, paymentMethod, amount) {
-  return { id, date, name, shipTo, paymentMethod, amount };
-}
-
-const LoanList = () => {
-  const rows = [
-    createData(
-      0,
-      "16 Mar, 2019",
-      "Elvis Presley",
-      "Tupelo, MS",
-      "VISA ⠀•••• 3719",
-      312.44
-    ),
-    createData(
-      1,
-      "16 Mar, 2019",
-      "Paul McCartney",
-      "London, UK",
-      "VISA ⠀•••• 2574",
-      866.99
-    ),
-    createData(
-      2,
-      "16 Mar, 2019",
-      "Tom Scholz",
-      "Boston, MA",
-      "MC ⠀•••• 1253",
-      100.81
-    ),
-    createData(
-      3,
-      "16 Mar, 2019",
-      "Michael Jackson",
-      "Gary, IN",
-      "AMEX ⠀•••• 2000",
-      654.39
-    ),
-    createData(
-      4,
-      "15 Mar, 2019",
-      "Bruce Springsteen",
-      "Long Branch, NJ",
-      "VISA ⠀•••• 5919",
-      212.79
-    ),
-  ];
-
+const BookManagement = (book) => {
+  const { bookList, pageCount, readBooks, removeBook } = book;
   const [currentPage, setCurrentPage] = useState(1);
-  const [pageCount, setPageCount] = useState(10);
   //추후에 검색기능 추가시
   const [keyword, setKeyword] = useState("");
   const [inputKeyword, setInputKeyword] = useState("");
+
+  const onHandleRemoveChange = (id) => {
+    removeBook(id);
+  };
+
+  //페이지 전환시 이벤트
+  const onHandlePageChange = (event, value) => {
+    setCurrentPage(value);
+    readBooks({
+      page: value,
+    });
+  };
 
   return (
     <>
@@ -80,12 +45,12 @@ const LoanList = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row) => (
-              <TableRow key={row.id}>
-                <TableCell>{row.name}</TableCell>
-                <TableCell>{row.shipTo}</TableCell>
-                <TableCell>{row.paymentMethod}</TableCell>
-                <TableCell>{row.paymentMethod}</TableCell>
+            {bookList.map((book) => (
+              <TableRow key={book.bookId}>
+                <TableCell>{book.bookId}</TableCell>
+                <TableCell>{book.title}</TableCell>
+                <TableCell>{book.author}</TableCell>
+                <TableCell>{book.publishedDate}</TableCell>
                 <TableCell sx={{ width: "100px" }}>
                   <Button
                     variant="contained"
@@ -99,6 +64,7 @@ const LoanList = () => {
                   <Button
                     variant="contained"
                     color="error"
+                    onClick={() => onHandleRemoveChange(book.bookId)}
                     sx={{ width: "100px", height: "40px", mx: 2 }}
                   >
                     삭제
@@ -111,7 +77,12 @@ const LoanList = () => {
       </TableContainer>
       <Box sx={{ display: "flex", justifyContent: "space-between", my: 2 }}>
         <Box></Box>
-        <Pagination count={pageCount} page={currentPage} shape="rounded" />
+        <Pagination
+          count={pageCount}
+          page={currentPage}
+          onChange={onHandlePageChange}
+          shape="rounded"
+        />
         <Button variant="contained" sx={{ mr: 4 }}>
           도서 추가
         </Button>
@@ -120,4 +91,4 @@ const LoanList = () => {
   );
 };
 
-export default LoanList;
+export default BookManagement;

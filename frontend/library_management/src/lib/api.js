@@ -62,6 +62,8 @@ export const deleteBook = (id) => {
 
   return deleteApi(url);
 };
+
+//getBookList({category:,keyword:,option:,page: })
 export const getBookList = ({
   category = 0,
   keyword = "",
@@ -91,12 +93,12 @@ export const putLoan = (id = 0) => {
   return putApi(url, id);
 };
 
-export const getLoanList = (
+export const getLoanList = ({
   id = 0,
   page = 1,
   paging = 20,
-  returned = false
-) => {
+  returned = false,
+}) => {
   const url = new URL(apiLink + "loanlist");
   url.searchParams.append("id", id);
   url.searchParams.append("page", page);
@@ -110,6 +112,21 @@ export const getLoanList = (
 export const getUser = (id) => {
   const url = new URL(apiLink + "user");
   url.searchParams.append("id", id);
+
+  return getApi(url);
+};
+
+export const deleteUser = (id) => {
+  const url = new URL(apiLink + "user");
+  url.searchParams.append("id", id);
+
+  return deleteApi(url);
+};
+
+export const getUserList = ({ page = 1, paging = 20 }) => {
+  const url = new URL(apiLink + "userlist");
+  url.searchParams.append("page", page);
+  url.searchParams.append("paging", paging);
 
   return getApi(url);
 };

@@ -1,14 +1,9 @@
 import React from "react";
-import BookDetail from "../components/features/book/BookDetail";
-import BookIntro from "../components/features/book/BookIntro";
+
+import BookDetailContainer from "../containers/BookDetailContainer";
 
 const BookDetailPage = () => {
-  return (
-    <>
-      <BookDetail />
-      <BookIntro />
-    </>
-  );
+  return <BookDetailContainer />;
 };
 
 export default BookDetailPage;

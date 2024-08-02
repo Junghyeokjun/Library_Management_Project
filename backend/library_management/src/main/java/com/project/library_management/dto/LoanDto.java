@@ -43,6 +43,9 @@ public class LoanDto {
 	//도서의 저자입니다.
 	private String author;
 
+	//도서의 이미지링크입니다.
+	private String imagePath;
+
 	//Loan 엔티티를 이용해 데이터를 입력하는 세터함수입니다.
 	public void setLoan(Loan loan) {
 		this.setLoanId(loan.getLoanId());
@@ -57,5 +60,6 @@ public class LoanDto {
 	public void setBook(Book book) {
 		this.setTitle(book.getTitle());
 		this.setAuthor(book.getAuthor());
+		this.setImagePath(book.getImagePath());
 	}
 }

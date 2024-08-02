@@ -1,19 +1,19 @@
 import { Container } from "@mui/material";
 import React from "react";
-import UserInfo from "../components/features/User/UserInfo";
-import LoanStatus from "../components/features/User/LoanStatus";
-import LoanHistory from "../components/features/User/LoanHistory";
 import SubTitle from "../components/common/SubTitle";
+import UserInfoContainer from "../containers/UserInfoContainer";
+import LoanStatusContainer from "../containers/LoanStatusContainer";
+import LoanHistoryContainer from "../containers/LoanHistoryContainer";
 
 const MyPage = () => {
   return (
     <Container maxWidth="md">
       <SubTitle>회원정보</SubTitle>
-      <UserInfo user={{ name: "aaa", email: "ssss" }} />
+      <UserInfoContainer />
       <SubTitle>대출 현황</SubTitle>
-      <LoanStatus />
+      <LoanStatusContainer />
       <SubTitle>대출 내역</SubTitle>
-      <LoanHistory />
+      <LoanHistoryContainer />
     </Container>
   );
 };

@@ -5,47 +5,11 @@ import {
   TableContainer,
   TableRow,
   Paper,
-  Pagination,
   Container,
 } from "@mui/material";
 import Book from "./Book";
 
-//샘플데이터 추후에 파라미터 받는 형식으로 변경
-
-function createData(
-  id,
-  title,
-  author,
-  publishedDate,
-  imagePath,
-  publisher,
-  availableCopies,
-  totalCopies
-) {
-  return {
-    id,
-    title,
-    author,
-    publishedDate,
-    imagePath,
-    publisher,
-    availableCopies,
-    totalCopies,
-  };
-}
-
-const BookList = () => {
-  const [bookList, setBookList] = useState([]);
-
-  useEffect(() => {
-    setBookList([
-      createData(22, 159, 6.0, 24, 4.0),
-      createData("Ice cream sandwich", 237, 9.0, 37, 4.3),
-      createData("Eclair", 262, 16.0, 24, 6.0),
-      createData("Cupcake", 305, 3.7, 67, 4.3),
-      createData("Gingerbread", 356, 16.0, 49, 3.9),
-    ]);
-  }, []);
+const BookList = ({ bookList }) => {
   return (
     //추후 스타일객체 외부이동
     <Container
@@ -67,7 +31,7 @@ const BookList = () => {
           <TableBody>
             {bookList.map((book) => (
               <TableRow
-                key={book.id}
+                key={book.bookId}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
                 <Book {...book} />
