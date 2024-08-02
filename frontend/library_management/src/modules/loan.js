@@ -28,6 +28,7 @@ export const readLoans = createRequestThunk(GET_LOAN_LIST, getLoanList);
 
 const initstate = {
   loanList: [],
+  pageCount: 1,
 };
 
 const loan = handleActions(

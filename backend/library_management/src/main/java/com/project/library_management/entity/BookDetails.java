@@ -2,6 +2,7 @@ package com.project.library_management.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 //이름                널?       유형     
@@ -15,6 +16,7 @@ import lombok.Setter;
 //이 클래스는 book_details 테이블과 매핑됩니다.
 
 @AllArgsConstructor
+@NoArgsConstructor
 @Setter
 @Getter
 public class BookDetails {

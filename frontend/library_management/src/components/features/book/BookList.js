@@ -36,11 +36,7 @@ function createData(
 
 const BookList = () => {
   const [bookList, setBookList] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [pageCount, setPageCount] = useState(10);
-  const handlePageChange = (event, value) => {
-    setCurrentPage(value);
-  };
+
   useEffect(() => {
     setBookList([
       createData(22, 159, 6.0, 24, 4.0),
@@ -80,16 +76,6 @@ const BookList = () => {
           </TableBody>
         </Table>
       </TableContainer>
-
-      <Container sx={{ display: "flex", justifyContent: "center" }}>
-        {/* 추후에 페이지수랑 연동 */}
-        <Pagination
-          count={pageCount}
-          page={currentPage}
-          onChange={handlePageChange}
-          shape="rounded"
-        />
-      </Container>
     </Container>
   );
 };

@@ -2,7 +2,7 @@ import axios from "axios";
 
 const apiLink = "http://localhost:8080/api/";
 
-//도서정보에 관한 api입니다.
+//restful방식의 axios요청을 생성하는 메서드입니다.
 const getApi = (url) => {
   return axios
     .get(url.toString())
@@ -39,6 +39,7 @@ const deleteApi = (url) => {
       throw e;
     });
 };
+//도서정보에 관한 api입니다.
 
 export const getBook = (id) => {
   const url = new URL(apiLink + "book");
@@ -67,7 +68,7 @@ export const getBookList = ({
   option = "title",
   page = 1,
 }) => {
-  const url = new URL(apiLink + "bookList");
+  const url = new URL(apiLink + "booklist");
   url.searchParams.append("category", category);
   url.searchParams.append("keyword", keyword);
   url.searchParams.append("option", option);
@@ -96,7 +97,7 @@ export const getLoanList = (
   paging = 20,
   returned = false
 ) => {
-  const url = new URL(apiLink + "loanList");
+  const url = new URL(apiLink + "loanlist");
   url.searchParams.append("id", id);
   url.searchParams.append("page", page);
   url.searchParams.append("paging", paging);

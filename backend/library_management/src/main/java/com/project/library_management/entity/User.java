@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 //이름         널?       유형            
@@ -19,6 +20,7 @@ import lombok.Setter;
 //유저를 나타내는 엔티티 클래스입니다.
 //이 클래스는 users와 매핑됩니다.
 @AllArgsConstructor
+@NoArgsConstructor
 @Setter
 @Getter
 public class User {

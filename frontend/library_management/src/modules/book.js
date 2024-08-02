@@ -48,6 +48,7 @@ export const readBooks = createRequestThunk(GET_BOOK_LIST, getBookList);
 const initstate = {
   book: {},
   bookList: [],
+  pageCount: 1,
 };
 
 const book = handleActions(
@@ -105,6 +106,7 @@ const book = handleActions(
       return {
         ...state,
         bookList,
+        pageCount,
       };
     },
     [GET_BOOK_LIST_FAILURE]: (state, { payload }) => {

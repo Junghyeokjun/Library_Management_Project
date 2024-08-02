@@ -29,12 +29,12 @@ function App() {
     <Box sx={{ minHeight: "100vh", display: "flex", flexDirection: "column" }}>
       <Header />
       <Box sx={{ flexGrow: 1 }}>
-        {/* <MainPage /> */}
+        <MainPage />
         {/* <BookDetailPage /> */}
         {/* <SignInPage /> */}
         {/* <SignUpPage /> */}
         {/* <BookMenagement /> */}
-        <MyPage />
+        {/* <MyPage /> */}
         {/* <LoanList /> */}
         {/* <UserList /> */}
         {/* <InsertBook /> */}

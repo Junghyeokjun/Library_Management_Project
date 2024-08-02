@@ -156,6 +156,16 @@ const InsertBook = () => {
             <Grid item xs={12}>
               <TextField
                 fullWidth
+                label="ISBN번호"
+                name="isbn"
+                value={bookDetails.quantity}
+                onChange={handleChange}
+                required
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
                 label="책 수량"
                 name="quantity"
                 type="number"

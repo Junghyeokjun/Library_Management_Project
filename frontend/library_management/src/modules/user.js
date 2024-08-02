@@ -11,22 +11,26 @@ export const readUser = createRequestThunk(GET_USER, getUser);
 
 const initstate = {
   user: {},
+  pageCount: 1,
 };
 
-const user = handleActions({
-  //유저정보 획득 메서드의 결과를 처리하는 리듀서 메서드입니다.
-  [GET_USER_SUCCESS]: (state, { payload }) => {
-    const user = payload;
-    return {
-      ...state,
-      user,
-    };
+const user = handleActions(
+  {
+    //유저정보 획득 메서드의 결과를 처리하는 리듀서 메서드입니다.
+    [GET_USER_SUCCESS]: (state, { payload }) => {
+      const user = payload;
+      return {
+        ...state,
+        user,
+      };
+    },
+    [GET_USER_FAILURE]: (state, { payload }) => {
+      console.log(GET_USER_FAILURE);
+      console.log(payload);
+      return state;
+    },
   },
-  [GET_USER_FAILURE]: (state, { payload }) => {
-    console.log(GET_USER_FAILURE);
-    console.log(payload);
-    return state;
-  },
-});
+  initstate
+);
 
 export default user;
