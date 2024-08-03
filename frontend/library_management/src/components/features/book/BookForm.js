@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Button,
@@ -7,14 +7,13 @@ import {
   Typography,
   Paper,
   Grid,
-  IconButton,
   Select,
   MenuItem,
   FormControl,
   InputLabel,
 } from "@mui/material";
-import PhotoCamera from "@mui/icons-material/PhotoCamera";
 import ImageIcon from "@mui/icons-material/Image";
+import { useNavigate } from "react-router-dom";
 
 const categories = [
   { value: 1, label: "총류" },
@@ -29,22 +28,56 @@ const categories = [
   { value: 10, label: "역사" },
 ];
 
-//이하 메서드는 추후 모듈로 분리예정
-
-const InsertBook = () => {
+const BookForm = ({ book, bookId, addBook, modifyBook, modified }) => {
+  const navigate = useNavigate();
   const [bookDetails, setBookDetails] = useState({
+    bookId: modified ? bookId : 0,
     title: "",
     author: "",
     publisher: "",
     publishedDate: "",
-    quantity: "",
+    isbn: "",
+    totalCopies: "",
     bookIntro: "",
     authorIntro: "",
     tableOfContents: "",
     category: "",
   });
   const [image, setImage] = useState(null);
-  const [imagePreview, setImagePreview] = useState(null);
+  const [imagePreview, setImagePreview] = useState(
+    modified ? book.imagePath : null
+  );
+  console.log(bookId);
+  useEffect(() => {
+    if (modified && book) {
+      const {
+        title = "",
+        author = "",
+        publisher = "",
+        publishedDate = "",
+        isbn = "",
+        totalCopies = "",
+        bookIntro = "",
+        authorIntro = "",
+        tableOfContents = "",
+        category = "",
+      } = book;
+      setBookDetails({
+        bookId: modified ? bookDetails.bookId : 0,
+        title,
+        author,
+        publisher,
+        publishedDate,
+        isbn,
+        totalCopies,
+        bookIntro,
+        authorIntro,
+        tableOfContents,
+        category,
+      });
+      console.log(bookDetails);
+    }
+  }, [book]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -60,47 +93,31 @@ const InsertBook = () => {
     setImagePreview(URL.createObjectURL(file));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     // FormData 객체 생성하여 이미지와 도서 정보 전송
     const formData = new FormData();
-    formData.append("image", image);
+    if (image && image !== "") {
+      formData.append("image", image);
+    }
+    formData.append("bookId", bookDetails.bookId);
     formData.append("title", bookDetails.title);
     formData.append("author", bookDetails.author);
     formData.append("publisher", bookDetails.publisher);
     formData.append("publishedDate", bookDetails.publishedDate);
-    formData.append("quantity", bookDetails.quantity);
+    formData.append("isbn", bookDetails.isbn);
+    formData.append("totalCopies", bookDetails.totalCopies);
     formData.append("bookIntro", bookDetails.bookIntro);
     formData.append("authorIntro", bookDetails.authorIntro);
     formData.append("tableOfContents", bookDetails.tableOfContents);
     formData.append("category", bookDetails.category);
 
-    // 업로드부분
-    fetch("/api/books", {
-      method: "POST",
-      body: formData,
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("Success:", data);
-        // 폼 초기화
-        setBookDetails({
-          title: "",
-          author: "",
-          publisher: "",
-          publishedDate: "",
-          quantity: "",
-          bookIntro: "",
-          authorIntro: "",
-          tableOfContents: "",
-          category: "",
-        });
-        setImage(null);
-        setImagePreview(null);
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
+    try {
+      modified ? await modifyBook(formData) : await addBook(formData);
+      navigate("/");
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -158,7 +175,7 @@ const InsertBook = () => {
                 fullWidth
                 label="ISBN번호"
                 name="isbn"
-                value={bookDetails.quantity}
+                value={bookDetails.isbn}
                 onChange={handleChange}
                 required
               />
@@ -167,9 +184,9 @@ const InsertBook = () => {
               <TextField
                 fullWidth
                 label="책 수량"
-                name="quantity"
+                name="totalCopies"
                 type="number"
-                value={bookDetails.quantity}
+                value={bookDetails.totalCopies}
                 onChange={handleChange}
                 required
               />
@@ -272,4 +289,4 @@ const InsertBook = () => {
   );
 };
 
-export default InsertBook;
+export default BookForm;

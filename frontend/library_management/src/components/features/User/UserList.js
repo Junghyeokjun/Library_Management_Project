@@ -3,6 +3,7 @@ import {
   Button,
   Container,
   Pagination,
+  styled,
   Table,
   TableBody,
   TableCell,
@@ -28,28 +29,37 @@ const UserList = ({ users, pageCount, readUsers, removeUser }) => {
   const handelRemoveClick = (id) => {
     removeUser(id);
   };
+
   return (
     <>
       <TableContainer sx={{ border: "1px solid #eee", borderRadius: "10px" }}>
         <Table size="small">
           <TableHead>
             <TableRow>
-              <TableCell>회원번호</TableCell>
-              <TableCell>이름</TableCell>
-              <TableCell>이메일</TableCell>
-              <TableCell>현재 대출권수</TableCell>
-              <TableCell>가입 일자</TableCell>
+              <TableCell sx={{ textAlign: "center" }}>회원번호</TableCell>
+              <TableCell sx={{ textAlign: "center" }}>이름</TableCell>
+              <TableCell sx={{ textAlign: "center" }}>이메일</TableCell>
+              <TableCell sx={{ textAlign: "center" }}>현재 대출권수</TableCell>
+              <TableCell sx={{ textAlign: "center" }}>가입 일자</TableCell>
               <TableCell align="right"></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {users.map((user) => (
               <TableRow key={user.userId}>
-                <TableCell sx={{ Height: "53px" }}>{user.userId}</TableCell>
-                <TableCell>{user.userName}</TableCell>
-                <TableCell>{user.email}</TableCell>
-                <TableCell>{user.loanCount}</TableCell>
-                <TableCell>{user.updatedAt}</TableCell>
+                <TableCell sx={{ Height: "53px", textAlign: "center" }}>
+                  {user.userId}
+                </TableCell>
+                <TableCell sx={{ textAlign: "center" }}>
+                  {user.userName}
+                </TableCell>
+                <TableCell sx={{ textAlign: "center" }}>{user.email}</TableCell>
+                <TableCell sx={{ textAlign: "center" }}>
+                  {user.loanCount}권
+                </TableCell>
+                <TableCell sx={{ textAlign: "center" }}>
+                  {user.updatedAt.substring(0, 10)}
+                </TableCell>
                 <TableCell align="right">
                   <Button
                     variant="contained"

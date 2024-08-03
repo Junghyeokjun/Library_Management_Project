@@ -1,6 +1,6 @@
 import { handleActions } from "redux-actions";
-import { deleteUser, getUser, getUserList } from "../lib/api";
-import createRequestThunk from "../lib/createRequestThunk";
+import { deleteUser, getUser, getUserList } from "@lib/api";
+import createRequestThunk from "@lib/createRequestThunk";
 
 //유저정보를 획득하는 액션입니다.
 const GET_USER = "user/GET_USER";

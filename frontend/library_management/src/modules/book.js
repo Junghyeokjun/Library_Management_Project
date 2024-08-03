@@ -1,12 +1,6 @@
 import { handleActions } from "redux-actions";
-import {
-  deleteBook,
-  getBook,
-  getBookList,
-  postBook,
-  putBook,
-} from "../lib/api";
-import createRequestThunk from "../lib/createRequestThunk";
+import { deleteBook, getBook, getBookList, postBook, putBook } from "@lib/api";
+import createRequestThunk from "@lib/createRequestThunk";
 
 //도서정보를 획득하는 액션입니다.
 const GET_BOOK = "book/GET_BOOK";

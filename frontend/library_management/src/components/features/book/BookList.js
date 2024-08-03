@@ -11,7 +11,6 @@ import Book from "./Book";
 
 const BookList = ({ bookList }) => {
   return (
-    //추후 스타일객체 외부이동
     <Container
       sx={{
         display: "flex",

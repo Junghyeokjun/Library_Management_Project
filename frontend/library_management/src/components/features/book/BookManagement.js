@@ -10,6 +10,7 @@ import {
   TableRow,
 } from "@mui/material";
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 const BookManagement = (book) => {
   const { bookList, pageCount, readBooks, removeBook } = book;
@@ -56,6 +57,8 @@ const BookManagement = (book) => {
                     variant="contained"
                     color="warning"
                     sx={{ width: "100px", height: "40px" }}
+                    component={Link}
+                    to={`/bookmodify/${book.bookId}`}
                   >
                     수정
                   </Button>
@@ -83,7 +86,12 @@ const BookManagement = (book) => {
           onChange={onHandlePageChange}
           shape="rounded"
         />
-        <Button variant="contained" sx={{ mr: 4 }}>
+        <Button
+          variant="contained"
+          sx={{ mr: 4 }}
+          component={Link}
+          to={"/bookadd"}
+        >
           도서 추가
         </Button>
       </Box>

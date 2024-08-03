@@ -1,5 +1,5 @@
 import React from "react";
-import BookManagementContainer from "../containers/BookManagementContainer";
+import BookManagementContainer from "@containers/book/BookManagementContainer";
 
 const BooKManagementPage = () => {
   return <BookManagementContainer />;

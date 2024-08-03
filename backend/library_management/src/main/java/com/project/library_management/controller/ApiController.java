@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.project.library_management.dto.BookDto;
 import com.project.library_management.dto.LoanDto;
@@ -43,7 +44,9 @@ public class ApiController {
 		book.setPublisher("테스트출판");
 		book.setBookId(1);
 		book.setPublishedDate(LocalDate.now());
+		book.setCategory(3);
 		book.setAvailableCopies(3);
+		book.setIsbn("1234");
 		book.setTotalCopies(3);
 		book.setImagePath("https://www.google.com/logos/doodles/2024/paris-games-sailing-6753651837110529.4-law.gif");
 		book.setBookIntro("책소개입니다 테스트용으로");
@@ -56,7 +59,7 @@ public class ApiController {
 	// POST: /api/book
 	// 해당 도서정보를 DB에 저장
 	@PostMapping("/book")
-	public String createBook(@RequestBody BookDto book) {
+	public String createBook(@ModelAttribute BookDto book) {
 		System.out.println(book);
 		System.out.println("createBook");
 
@@ -66,7 +69,7 @@ public class ApiController {
 	// PUT: /api/book
 	// 해당 도서정보를 DB에서 수정
 	@PutMapping("/book")
-	public String updateBook(@RequestBody BookDto book) {
+	public String updateBook(@ModelAttribute BookDto book) {
 
 		System.out.println(book);
 		System.out.println("updateBook");
@@ -172,7 +175,7 @@ public class ApiController {
 	}
 
 	// GET: /api/user?id=
-	// 도서번호에 해당하는 도서 정보 반환
+	// 해당 조건에 해당하는 유저 정보 반환
 	@GetMapping("/user")
 	public UserDto getUser(@RequestParam long id) {
 		System.out.println(id);
@@ -185,7 +188,7 @@ public class ApiController {
 	}
 	
 	// DELETE: /api/user?id=
-	// 도서번호에 해당하는 도서 정보 반환
+	// 해당 조건에 해당하는 유저 정보 삭제
 	@DeleteMapping("/user")
 	public String deleteUser(@RequestParam long id) {
 		System.out.println(id);
@@ -194,7 +197,7 @@ public class ApiController {
 	}
 
 	// GET: /api/userlist?page=&paging=
-	// 도서번호에 해당하는 도서 정보 반환
+	// 해당 조건에 해당하는 유저 정보 리스트 반환
 	@GetMapping("/userlist")
 	public Map<String, Object> getUserList(@ModelAttribute SearchDto search) {
 		System.out.println(search);

@@ -1,6 +1,6 @@
 import { handleActions } from "redux-actions";
-import { getLoanList, postLoan, putLoan } from "../lib/api";
-import createRequestThunk from "../lib/createRequestThunk";
+import { getLoanList, postLoan, putLoan } from "@lib/api";
+import createRequestThunk from "@lib/createRequestThunk";
 
 //대출정보를 입력하는 액션입니다.
 const ADD_LOAN = "loan/ADD_LOAN";

@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import BookDetail from "../components/features/book/BookDetail";
-import BookIntro from "../components/features/book/BookIntro";
-import { readBook } from "../modules/book";
+import BookDetail from "@components/features/book/BookDetail";
+import BookIntro from "@components/features/book/BookIntro";
+import { readBook } from "@modules/book";
 
 const BooKDetailContainer = ({ book, readBook }) => {
   useEffect(() => {

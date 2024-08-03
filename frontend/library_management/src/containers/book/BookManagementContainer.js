@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import BookManagement from "../components/features/book/BookManagement";
-import { addBook, modifyBook, readBooks, removeBook } from "../modules/book";
+import BookManagement from "@components/features/book/BookManagement";
+import { addBook, modifyBook, readBooks, removeBook } from "@modules/book";
 
 const BooKManagementContainer = ({
   bookList,

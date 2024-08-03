@@ -5,14 +5,15 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import Link from "@mui/material/Link";
+import { useLocation } from "react-router-dom";
 
 //머티리얼 템플릿에서 가져온 ui템플릿입니다.
 
 function Copyright() {
   return (
-    <Typography variant="body2" color="text.secondary">
+    <Typography variant="body2" color="text.secondary" textAlign={"center"}>
       {"Copyright © "}
-      <Link color="inherit" href="https://mui.com/">
+      <Link color="inherit" href="/">
         Your Website
       </Link>{" "}
       {new Date().getFullYear()}
@@ -42,8 +43,8 @@ export default function StickyFooter() {
         }}
       >
         <Container maxWidth="sm">
-          <Typography variant="body1">
-            My sticky footer can be found here.
+          <Typography variant="body1" textAlign={"center"}>
+            도서 관리 시스템
           </Typography>
           <Copyright />
         </Container>

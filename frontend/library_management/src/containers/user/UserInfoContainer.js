@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import UserInfo from "../components/features/User/UserInfo";
-import { readUser } from "../modules/user";
+import UserInfo from "@components/features/user/UserInfo";
+import { readUser } from "@modules/user";
 
 const UserInfoContainer = ({ user, readUser }) => {
   useEffect(() => {

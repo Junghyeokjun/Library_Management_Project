@@ -1,9 +1,9 @@
 import { Container } from "@mui/material";
 import React from "react";
-import SubTitle from "../components/common/SubTitle";
-import UserInfoContainer from "../containers/UserInfoContainer";
-import LoanStatusContainer from "../containers/LoanStatusContainer";
-import LoanHistoryContainer from "../containers/LoanHistoryContainer";
+import SubTitle from "@components/common/SubTitle";
+import UserInfoContainer from "@containers/user/UserInfoContainer";
+import LoanStatusContainer from "@containers/loan/LoanStatusContainer";
+import LoanHistoryContainer from "@containers/loan/LoanHistoryContainer";
 
 const MyPage = () => {
   return (

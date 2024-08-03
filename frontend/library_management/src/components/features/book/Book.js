@@ -1,9 +1,10 @@
 import React from "react";
 import TableCell from "@mui/material/TableCell";
 import { Box, Button, Typography } from "@mui/material";
+import { Link } from "react-router-dom";
 
 const Book = ({
-  id,
+  bookId,
   title,
   author,
   publishedDate,
@@ -36,12 +37,18 @@ const Book = ({
             justifyContent: "end",
           }}
         >
-          {/* 추후 제목에 링크 */}
-          <Typography
-            sx={{ fontWeight: "bold", fontSize: "2rem", mb: "1.2rem" }}
-          >
-            {title}
-          </Typography>
+          <Link to={`bookdetail/${bookId}`} style={{ textDecoration: "none" }}>
+            <Typography
+              sx={{
+                fontWeight: "bold",
+                fontSize: "2rem",
+                mb: "1.2rem",
+                color: "black ",
+              }}
+            >
+              {title}
+            </Typography>
+          </Link>
           <Box>
             <Typography>-저자:{author}</Typography>
             <Typography>-출판연도:{publishedDate}</Typography>
@@ -63,8 +70,9 @@ const Book = ({
               {availableCopies}/{totalCopies} 대출
             </Typography>
           </Box>
-          {/* 원클릭 함수로 제작하여 제목과 함께 링크 */}
-          <Button variant="contained">상세보기</Button>
+          <Link to={`bookdetail/${bookId}`} style={{ textDecoration: "none" }}>
+            <Button variant="contained">상세보기</Button>
+          </Link>
         </Box>
       </TableCell>
     </>

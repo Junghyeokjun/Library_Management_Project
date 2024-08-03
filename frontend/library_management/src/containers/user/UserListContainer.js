@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import { readUsers, removeUser } from "../modules/user";
-import UserList from "../components/features/User/UserList";
+import { readUsers, removeUser } from "@modules/user";
+import UserList from "@components/features/user/UserList";
 
 const UserListContainer = ({ users, pageCount, readUsers, removeUser }) => {
   console.log(pageCount);

@@ -12,18 +12,34 @@ const getApi = (url) => {
       throw e;
     });
 };
-const postApi = (url, param) => {
+const postApi = (
+  url,
+  param,
+  config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  }
+) => {
   return axios
-    .post(url.toString(), param)
+    .post(url.toString(), param, config)
     .then((response) => response)
     .catch((e) => {
       console.error(e);
       throw e;
     });
 };
-const putApi = (url, param) => {
+const putApi = (
+  url,
+  param,
+  config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  }
+) => {
   return axios
-    .put(url.toString(), param)
+    .put(url.toString(), param, config)
     .then((response) => response)
     .catch((e) => {
       console.error(e);
@@ -49,12 +65,20 @@ export const getBook = (id) => {
 };
 export const postBook = (book) => {
   const url = new URL(apiLink + "book");
-  return postApi(url, book);
+  return postApi(url, book, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
 };
 export const putBook = (book) => {
   const url = new URL(apiLink + "book");
 
-  return putApi(url, book);
+  return putApi(url, book, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
 };
 export const deleteBook = (id) => {
   const url = new URL(apiLink + "book");

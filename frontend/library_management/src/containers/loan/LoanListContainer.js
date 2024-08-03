@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import { readUsers, removeUser } from "../modules/user";
-import LoanList from "../components/features/User/LoanList";
-import { readLoans } from "../modules/loan";
+import { readUsers, removeUser } from "@modules/user";
+import LoanList from "@components/features/loan/LoanList";
+import { readLoans } from "@modules/loan";
 
 const LoanListContainer = ({ loans, pageCount, readLoans }) => {
   useEffect(() => {

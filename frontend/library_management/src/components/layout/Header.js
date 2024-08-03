@@ -11,23 +11,55 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import PersonIcon from "@mui/icons-material/Person";
 import HomeIcon from "@mui/icons-material/Home";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 //해당 component는 머티리얼 ui의 템플릿을 사용한 코드입니다.
 
 const pages = ["회원 관리", "도서관리", "대출내역 조회"];
-const settings = ["회원정보 수정", "대출현황", "로그아웃"];
+const settings = ["회원정보 수정", "로그아웃"];
 
 function ResponsiveAppBar() {
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const navigite = useNavigate();
 
-  const handleOpenNavMenu = (event) => {};
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
   };
 
-  const handleCloseNavMenu = () => {};
+  const handleCloseNavMenu = (page) => {
+    switch (page) {
+      case pages[0]: {
+        navigite("/userlist");
+        break;
+      }
+      case pages[1]: {
+        navigite("/bookmanagement");
+        break;
+      }
+      case pages[2]: {
+        navigite("/loanlist");
+        break;
+      }
 
-  const handleCloseUserMenu = () => {
+      default:
+        break;
+    }
+  };
+
+  const handleCloseUserMenu = (setting) => {
     setAnchorElUser(null);
+    switch (setting) {
+      case settings[0]: {
+        navigite("/mypage");
+        break;
+      }
+      case settings[1]: {
+        navigite("/login");
+        break;
+      }
+
+      default:
+        break;
+    }
   };
 
   return (
@@ -37,8 +69,7 @@ function ResponsiveAppBar() {
           <Typography
             variant="h6"
             noWrap
-            component="a"
-            href="#app-bar-with-responsive-menu"
+            component={Link}
             sx={{
               mr: 2,
               display: "flex",
@@ -48,15 +79,15 @@ function ResponsiveAppBar() {
               color: "inherit",
               textDecoration: "none",
             }}
+            to="/"
           >
             <HomeIcon />
           </Typography>
-
           <Box sx={{ flexGrow: 1, display: "flex" }}>
             {pages.map((page) => (
               <Button
                 key={page}
-                onClick={handleCloseNavMenu} //후에 리듀서 처리
+                onClick={() => handleCloseNavMenu(page)}
                 sx={{ my: 2, color: "white", display: "block" }}
               >
                 {page}
@@ -88,7 +119,10 @@ function ResponsiveAppBar() {
             >
               {settings.map((setting) => (
                 //후에 리듀서 처리
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                <MenuItem
+                  key={setting}
+                  onClick={() => handleCloseUserMenu(setting)}
+                >
                   <Typography textAlign="center">{setting}</Typography>
                 </MenuItem>
               ))}

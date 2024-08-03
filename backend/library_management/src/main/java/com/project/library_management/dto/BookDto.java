@@ -5,6 +5,10 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.lang.Nullable;
+import org.springframework.web.multipart.MultipartFile;
+
 import com.project.library_management.entity.Book;
 import com.project.library_management.entity.BookDetails;
 import com.project.library_management.entity.Category;
@@ -31,6 +35,7 @@ public class BookDto {
 	private String author;
 
 	// 도서의 출판날짜입니다.
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate publishedDate;
 
 	// 도서의 isbn 번호입니다.
@@ -55,7 +60,7 @@ public class BookDto {
 	private String publisher;
 
 	// 도서 카테고리를 식별하는 ID입니다.
-	private List<Long> categoryIds;
+	private long category;
 
 	// 도서 소개입니다
 	private String bookIntro;
@@ -65,9 +70,13 @@ public class BookDto {
 
 	// 도서의 목차입니다.
 	private String tableOfContents;
-
+	
 	// 도서의 카테고리 목록입니다.
-	private List<Category> categories;
+	private List<Long> categories;
+	
+	//도서를 업로드, 수정할때 사용되는 이미지 파일입니다.
+	@Nullable
+	private MultipartFile image;
 
 	// Book 엔티티를 이용해 데이터를 입력하는 세터함수입니다.
 
@@ -85,20 +94,19 @@ public class BookDto {
 		this.setPublisher(book.getPublisher());
 	}
 
+	
 	// Category 엔티티를 이용해 데이터를 입력하는 세터함수입니다.
-	public void setCategory(Category category) {
-		List<Long> categoryIds = new ArrayList<Long>();
-		categoryIds.add(category.getCategoryId());
-		this.setCategoryIds(categoryIds);
+	public void setBookCategory(Category category) {
+		this.setCategory(category.getCategoryId());
 	}
 
 	// Category 엔티티 리스트를 이용해 데이터를 입력하는 세터함수입니다.
-	public void setCategories(List<Category> categories) {
+	public void setBookCategories(List<Category> categories) {
 		List<Long> categoryIds = new ArrayList<Long>();
 		for (Category category : categories) {
 			categoryIds.add(category.getCategoryId());
 		}
-		this.setCategoryIds(categoryIds);
+		this.setCategories(categoryIds);
 	}
 	
 	//BookDetails 엔티티를 이용해 데이터를 입력하는 세터함수입니다.
