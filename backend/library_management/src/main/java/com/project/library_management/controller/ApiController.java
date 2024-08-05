@@ -1,7 +1,8 @@
 package com.project.library_management.controller;
 
+import java.sql.Date;
+import java.sql.Timestamp;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -17,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.project.library_management.dto.BookDto;
 import com.project.library_management.dto.LoanDto;
@@ -43,7 +43,7 @@ public class ApiController {
 		book.setAuthor("테스트저자");
 		book.setPublisher("테스트출판");
 		book.setBookId(1);
-		book.setPublishedDate(LocalDate.now());
+		book.setPublishedDate(Date.valueOf(LocalDate.now()));
 		book.setCategory(3);
 		book.setAvailableCopies(3);
 		book.setIsbn("1234");
@@ -78,7 +78,7 @@ public class ApiController {
 	}
 
 	// DELETE: /api/book?id=
-	// 해당 도서정보를 DB에서 수정
+	// 해당 도서정보를 DB에서 삭제
 	@DeleteMapping("/book")
 	public String deleteBook(@RequestParam long id) {
 
@@ -104,7 +104,7 @@ public class ApiController {
 			book.setAuthor("테스트저자" + i);
 			book.setPublisher("테스트출판" + i);
 			book.setBookId(i);
-			book.setPublishedDate(LocalDate.now());
+			book.setPublishedDate(Date.valueOf(LocalDate.now()));
 			book.setAvailableCopies(3);
 			book.setTotalCopies(3);
 			book.setImagePath(
@@ -158,8 +158,8 @@ public class ApiController {
 			loan.setLoanId(i);
 			loan.setUserId(i);
 			loan.setBookId(i);
-			loan.setLoanDate(LocalDate.now());
-			loan.setReturnDate(LocalDate.now());
+			loan.setLoanDate(new Timestamp(System.currentTimeMillis()));
+			loan.setReturnDate(new Timestamp(System.currentTimeMillis()));
 			loan.setOverDue('n');
 			loan.setTitle("testtitle" + i);
 			loan.setImagePath(
@@ -186,7 +186,7 @@ public class ApiController {
 
 		return user;
 	}
-	
+
 	// DELETE: /api/user?id=
 	// 해당 조건에 해당하는 유저 정보 삭제
 	@DeleteMapping("/user")
@@ -207,12 +207,12 @@ public class ApiController {
 
 		List<UserDto> users = new ArrayList<UserDto>();
 		for (int i = 0; i < search.getPaging(); i++) {
-			user=new UserDto();
+			user = new UserDto();
 			user.setUserId(i);
-			user.setUserName("테스트"+i);
-			user.setEmail("이메일"+i);
+			user.setUserName("테스트" + i);
+			user.setEmail("이메일" + i);
 			user.setLoanCount(i);
-			user.setUpdatedAt(LocalDateTime.now());
+			user.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
 			users.add(user);
 		}
 

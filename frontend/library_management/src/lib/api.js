@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const apiLink = "http://localhost:8080/api/";
+const apiLink = "http://localhost:8282/api/";
 
 //restful방식의 axios요청을 생성하는 메서드입니다.
 const getApi = (url) => {

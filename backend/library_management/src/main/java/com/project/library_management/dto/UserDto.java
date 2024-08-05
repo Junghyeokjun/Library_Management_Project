@@ -1,6 +1,6 @@
 package com.project.library_management.dto;
 
-import java.time.LocalDateTime;
+import java.sql.Timestamp;
 
 import com.project.library_management.entity.User;
 
@@ -31,10 +31,10 @@ public class UserDto {
 	private String role;
 	
 	//유저의 가입일자입니다.
-	private LocalDateTime createdAt;
+	private Timestamp createdAt;
 	
 	//유저 정보를 마지막으로 수정한 날짜입니다.
-	private LocalDateTime updatedAt;
+	private Timestamp updatedAt;
 	
 	//유저의 대출권수입니다.
 	private long loanCount;

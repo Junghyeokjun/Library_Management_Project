@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="com.project.library_management.mapper.BookMapper">
+
+	<!-- 도서의 정보만 필요할때 사용됩니다. -->
+	<resultMap type="Book" id="bookMap">
+		<id property="bookId" column="BOOK_ID" />
+		<result property="title" column="TITLE" />
+		<result property="author" column="AUTHOR" />
+		<result property="publishedDate" column="PUBLISHED_DATE" />
+		<result property="isbn" column="ISBN" />
+		<result property="availableCopies" column="AVAILABLE_COPIES" />
+		<result property="totalCopies" column="TOTAL_COPIES" />
+		<result property="createdAt" column="CREATED_AT" />
+		<result property="updatedAt" column="UPDATED_AT" />
+		<result property="imagePath" column="IMAGE_PATH" />
+		<result property="publisher" column="PUBLISHER" />
+	</resultMap>
+
+	<!-- 도서의 상세정보까지 필요할때 사용됩니다. -->
+
+	<resultMap type="Book" id="bookInnerDetailMap">
+		<id property="bookId" column="BOOK_ID" />
+		<result property="title" column="TITLE" />
+		<result property="author" column="AUTHOR" />
+		<result property="publishedDate" column="PUBLISHED_DATE" />
+		<result property="isbn" column="ISBN" />
+		<result property="availableCopies" column="AVAILABLE_COPIES" />
+		<result property="totalCopies" column="TOTAL_COPIES" />
+		<result property="createdAt" column="CREATED_AT" />
+		<result property="updatedAt" column="UPDATED_AT" />
+		<result property="imagePath" column="IMAGE_PATH" />
+		<result property="publisher" column="PUBLISHER" />
+		<association property="detail" javaType="BookDetails"
+			resultMap="bookDetailMap" />
+	</resultMap>
+
+	<resultMap type="BookDetails" id="bookDetailMap">
+		<id property="bookId" column="BOOK_ID" />
+		<result property="bookIntro" column="BOOK_INTRO" />
+		<result property="authorIntro" column="AUTHOR_INTRO" />
+		<result property="tableOfContents" column="TABLE_OF_CONTENTS" />
+	</resultMap>
+
+
+	<select id="selectBooks" parameterType="SearchDto"
+		resultMap="bookInnerDetailMap">
+		SELECT * FROM (
+			select *from (
+				SELECT sub.*, rownum rn FROM (
+					SELECT
+						b.*,
+						bd.book_intro,
+						bd.author_intro,
+						bd.table_of_contents,
+						c.name,
+						ROW_NUMBER() OVER (PARTITION BY b.book_id ORDER BY b.book_id) AS r
+					FROM
+						books b
+					JOIN
+						book_details bd ON b.book_id = bd.book_id
+					JOIN
+						book_categories bc ON b.book_id = bc.book_id
+					JOIN
+						categories c ON
+						bc.category_id = c.category_id
+					WHERE
+						1 = 1
+					<if test="category != 0">
+						AND bc.category_id = #{category}
+					</if>
+					<if test="keyword != ''">
+						<if test="option == 'title'">
+							AND b.title LIKE CONCAT('%', #{keyword}, '%')
+						</if>
+						<if test="option == 'author'">
+							AND b.author LIKE CONCAT('%', #{keyword}, '%')
+						</if>
+						<if test="option == 'publisher'">
+							AND b.publisher LIKE CONCAT('%', #{keyword}, '%')
+						</if>
+					</if>
+					sub where sub.r=1
+					)
+				WHERE rn <![CDATA[<=]]>
+				#{paging} * #{page}
+				)
+			WHERE rn <![CDATA[>]]>
+		#{paging} * (#{page} - 1)
+	</select>
+	
+	<select id="selectBookCount" parameterType="SearchDto" resultType="long">
+		SELECT
+			COUNT(DISTINCT b.book_id)
+		FROM
+			books b
+		JOIN
+			book_details bd ON b.book_id = bd.book_id
+		JOIN
+			book_categories bc ON b.book_id = bc.book_id
+		JOIN
+			categories c ON
+			bc.category_id = c.category_id
+		WHERE
+			1 = 1
+		<if test="category != 0">
+			AND bc.category_id = #{category}
+		</if>
+		<if test="keyword != ''">
+			<if test="option == 'title'">
+				AND b.title LIKE CONCAT('%', #{keyword}, '%')
+			</if>
+			<if test="option == 'author'">
+				AND b.author LIKE CONCAT('%', #{keyword}, '%')
+			</if>
+			<if test="option == 'publisher'">
+				AND b.publisher LIKE CONCAT('%', #{keyword}, '%')
+			</if>
+		</if>
+	</select>
+	
+	
+	<select id="selectBook" resultMap="bookMap">
+		select * from books where
+		book_id=#{id}
+	</select>
+
+	<insert id="insertBook" parameterType="Book">
+		<selectKey keyProperty="bookId" resultType="long"
+			order="BEFORE">
+			SELECT book_seq.NEXTVAL FROM DUAL
+		</selectKey>
+		INSERT INTO books (
+			book_id,
+			title,
+			author,
+			published_date,
+			isbn,
+			available_copies,
+			total_copies,
+			created_at,
+			updated_at,
+			image_path,
+			publisher
+		) VALUES (
+			#{bookId},
+			#{title},
+			#{author},
+			TO_DATE(#{publishedDate}, 'YYYY-MM-DD'),
+			#{isbn},
+			0,
+			#{totalCopies},
+			SYSTIMESTAMP,
+			SYSTIMESTAMP,
+			#{imagePath},
+			#{publisher}
+		)
+	</insert>
+	<insert id="insertBookDetails" parameterType="BookDto">
+		INSERT INTO book_details (
+			book_id,
+			book_intro,
+			author_intro,
+			table_of_contents
+			) VALUES (
+			#{bookId},
+			#{bookIntro},
+			#{authorIntro},
+			#{tableOfContents}
+		)
+	</insert>
+
+    <update id="updateBook" parameterType="Book">
+        UPDATE books
+        SET
+            title = #{title},
+            author = #{author},
+            published_date = TO_DATE(#{publishedDate}, 'YYYY-MM-DD'),
+            isbn = #{isbn},
+            total_copies = #{totalCopies},
+            updated_at = SYSTIMESTAMP,
+            image_path = #{imagePath},
+            publisher = #{publisher}
+        WHERE book_id = #{bookId}
+    </update>
+
+    <update id="updateBookDetails" parameterType="BookDetails">
+        UPDATE book_details
+        SET
+            book_intro = #{bookIntro},
+            author_intro = #{authorIntro},
+            table_of_contents = #{tableOfContents}
+        WHERE book_id = #{bookId}
+    </update>
+	
+	<delete id="deleteBook" parameterType="long">
+		DELETE FROM Books WHERE book_id=#{id}
+	</delete>
+	
+
+</mapper>

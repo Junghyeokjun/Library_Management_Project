@@ -1,6 +1,6 @@
 package com.project.library_management.dto;
 
-import java.time.LocalDate;
+import java.sql.Timestamp;
 
 import com.project.library_management.entity.Book;
 import com.project.library_management.entity.Loan;
@@ -27,10 +27,10 @@ public class LoanDto {
 	private long bookId;
 	
 	//대출을 시행한 날짜입니다.
-	private LocalDate loanDate;
+	private Timestamp loanDate;
 	
 	//반납을 시행한 날짜입니다.
-	private LocalDate returnDate;
+	private Timestamp returnDate;
 	
 	//연체여부 입니다.
 	private char overDue;

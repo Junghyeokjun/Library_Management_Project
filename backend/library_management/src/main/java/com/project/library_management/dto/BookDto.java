@@ -1,7 +1,7 @@
 package com.project.library_management.dto;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,6 +14,7 @@ import com.project.library_management.entity.BookDetails;
 import com.project.library_management.entity.Category;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
@@ -22,6 +23,7 @@ import lombok.ToString;
 
 @Getter
 @Setter
+@NoArgsConstructor
 @ToString
 public class BookDto {
 
@@ -36,7 +38,7 @@ public class BookDto {
 
 	// 도서의 출판날짜입니다.
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-	private LocalDate publishedDate;
+	private Date publishedDate;
 
 	// 도서의 isbn 번호입니다.
 	private String isbn;
@@ -48,10 +50,10 @@ public class BookDto {
 	private long totalCopies;
 
 	// 해당 레코드가 생성된 날짜입니다.
-	private LocalDateTime createdAt;
+	private Timestamp createdAt;
 
 	// 해당 레코드가 마지막으로 수정된 날짜입니다.
-	private LocalDateTime updatedAt;
+	private Timestamp updatedAt;
 
 	// 도서의 이미지경로입니다.
 	private String imagePath;
@@ -78,6 +80,10 @@ public class BookDto {
 	@Nullable
 	private MultipartFile image;
 
+	public BookDto(Book book) {
+		this.setBook(book);
+	}
+	
 	// Book 엔티티를 이용해 데이터를 입력하는 세터함수입니다.
 
 	public void setBook(Book book) {
@@ -92,6 +98,7 @@ public class BookDto {
 		this.setUpdatedAt(book.getUpdatedAt());
 		this.setImagePath(book.getImagePath());
 		this.setPublisher(book.getPublisher());
+		this.setBookDetails(book.getDetail());
 	}
 
 	

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.project.library_management.mapper.UserMapper">
+
+
+	<resultMap type="User" id="userMap">
+		<id property="userId" column="USER_ID"/>
+		<result property="userName" column="USERNAME"/>
+		<result property="password" column="PASSWORD"/>
+		<result property="email" column="EMAIL"/>
+		<result property="role" column="ROLE"/>
+		<result property="createdAt" column="CREATED_AT"/>
+		<result property="updatedAt" column="UPDATED_AT"/>
+	</resultMap>	
+	
+	<!-- 해당 resultMap의 loancount는 별칭을 지정해서 삽입해야합니다. -->
+	<resultMap type="UserDto" id="userDtoMap">
+		<id property="userId" column="USER_ID"/>
+		<result property="userName" column="USERNAME"/>
+		<result property="password" column="PASSWORD"/>
+		<result property="email" column="EMAIL"/>
+		<result property="role" column="ROLE"/>
+		<result property="createdAt" column="CREATED_AT"/>
+		<result property="updatedAt" column="UPDATED_AT"/>
+		<result property="loanCount" column="LOAN_COUNT"/>
+	</resultMap>
+	
+	<select id="selectUser" parameterType="long" resultMap="userMap">
+		select * from users where user_id=#{id}
+	</select>
+	
+	<select id="selectUsers" parameterType="SearchDto" resultMap="userDtoMap">
+		SELECT * FROM (
+	        SELECT l.*, rownum as rn
+	        FROM (
+	            SELECT sub.*,rownum from(select users.*, COALESCE(count(loans.user_id), 0) AS LOAN_COUNT 
+                    from users LEFT JOIN loans on loans.user_id=users.user_id 
+                    GROUP BY 
+                    loans.user_id, 
+                    users.user_id, 
+                    users.username, 
+                    users.password, 
+                    users.role, 
+                    users.email, 
+                    users.created_at,
+                    users.updated_at 
+                    order by users.user_id desc) sub
+	        ) l
+	        WHERE rownum <![CDATA[<=]]> #{paging} * #{page}
+	    )
+	    WHERE rn <![CDATA[>]]> #{paging} * (#{page} - 1)
+	</select>
+	<select id="selectUserCount" resultType="long">
+		select count(*) from users
+	</select>
+	<delete id="deleteUser" parameterType="long">
+		delete from users where user_id=#{id}
+	</delete>
+	
+
+</mapper>

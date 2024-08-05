@@ -1,8 +1,7 @@
 package com.project.library_management.entity;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
+import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.List;
 
 import lombok.AllArgsConstructor;
@@ -26,7 +25,7 @@ public class Book {
 	private String author;
 
 	// 도서의 출판날짜입니다.
-	private LocalDate publishedDate;
+	private Date publishedDate;
 
 	// 도서의 isbn 번호입니다.
 	private String isbn;
@@ -38,10 +37,10 @@ public class Book {
 	private long totalCopies;
 
 	// 해당 레코드가 생성된 날짜입니다.
-	private LocalDateTime createdAt;
+	private Timestamp createdAt;
 
 	// 해당 레코드가 마지막으로 수정된 날짜입니다.
-	private LocalDateTime updatedAt;
+	private Timestamp updatedAt;
 
 	// 도서의 이미지경로입니다.
 	private String imagePath;
@@ -49,4 +48,9 @@ public class Book {
 	// 도서의 출판사입니다.
 	private String publisher;
 
+	// n:m 관계 = 도서는 여러개의 카테고리를 지닐수 있습니다.
+	private List<Category> categories;
+
+	//1:1 관계 = 도서는 하나의 상세설명을 지닙니다.
+	private BookDetails detail;
 }

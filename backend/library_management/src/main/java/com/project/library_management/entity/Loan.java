@@ -1,6 +1,6 @@
 package com.project.library_management.entity;
 
-import java.time.LocalDate;
+import java.sql.Timestamp;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -35,11 +35,12 @@ public class Loan {
 	private long bookId;
 	
 	//대출을 시행한 날짜입니다.
-	private LocalDate loanDate;
+	private Timestamp loanDate;
 	
 	//반납을 시행한 날짜입니다.
-	private LocalDate returnDate;
+	private Timestamp returnDate;
 	
 	//연체여부 입니다.
 	private char overDue;
+	
 }

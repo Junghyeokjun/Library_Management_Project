@@ -1,5 +1,7 @@
 package com.project.library_management.entity;
 
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,4 +26,7 @@ public class Category {
 	
 	//카테고리의 이름입니다.
 	private String name;
+	
+	//n:m관계 = 카테고리는 여러개의 도서의 속성이 될수 있음 
+	private List<Book> books;
 }

@@ -7,7 +7,6 @@ import SignInPage from "@pages/user/SignInPage";
 import SignUpPage from "@pages/user/SingUpPage";
 import BookDetailPage from "@pages/book/BookDetailPage";
 import MyPage from "@pages/user/MyPage";
-import BookMenagement from "@components/features/book/BookManagement";
 import { Box } from "@mui/material";
 import BooKManagementPage from "@pages/book/BooKManagementPage";
 import UserListPage from "@pages/user/UserListPage";

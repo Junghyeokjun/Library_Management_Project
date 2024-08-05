@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.project.library_management.mapper.LoanMapper">
+
+	<!-- 기본적인 loan엔티티를 후에 쓸일이 있을지 몰라 미리 정의해두었습니다. -->
+	<resultMap type="Loan" id="loanMap">
+		<id property="loanId" column="LOAN_ID"/>
+		<result property="userId" column="USER_ID"/>
+		<result property="bookId" column="BOOK_ID"/>
+		<result property="loanDate" column="LOAN_DATE"/>
+		<result property="returnDate" column="RETURN_DATE"/>
+		<result property="overDue" column="OVERDUE"/>		
+	</resultMap>
+	
+	<!-- 실질적으로 쓰이는 loanDto입니다. -->	
+	<resultMap type="LoanDto" id="loanDtoMap">
+		<id property="loanId" column="LOAN_ID"/>
+		<result property="userId" column="USER_ID"/>
+		<result property="bookId" column="BOOK_ID"/>
+		<result property="loanDate" column="LOAN_DATE"/>
+		<result property="returnDate" column="RETURN_DATE"/>
+		<result property="overDue" column="OVERDUE"/>
+		<result property="title" column="TITLE"/>
+		<result property="author" column="AUTHOR"/>
+		<result property="imagePath" column="IMAGE_PATH"/>		
+	</resultMap>
+	
+	
+	<select id="selectLoans" parameterType="SearchDto" resultMap="loanDtoMap">
+	    SELECT * FROM (
+	        SELECT l.*, rownum as rn
+	        FROM (
+	            SELECT l.*,b.title,b.author,b.image_path
+	            FROM loans l
+	            JOIN
+	            	books b ON b.book_id=l.book_id
+	            WHERE 1 = 1
+	            <if test="id != 0">
+	                AND USER_ID = #{id}
+	            </if>
+	            <if test="returned">
+	            	AND RETURN_DATE IS NULL
+	            </if>
+	        ) l
+	        WHERE rownum <![CDATA[<=]]> #{paging} * #{page}
+	    )
+	    WHERE rn <![CDATA[>]]> #{paging} * (#{page} - 1)
+	</select>
+	
+	<select id="selectLoanCount" parameterType="SearchDto" resultType="long">
+	        SELECT l.*
+	        FROM (
+	            SELECT l.*
+	            FROM loans l
+	            WHERE 1 = 1
+	            <if test="id != 0">
+	                AND USER_ID = #{id}
+	            </if>
+	            <if test="returned">
+	            	AND RETURN_DATE IS NULL
+	            </if>
+	        ) l
+
+	</select>
+	
+	<insert id="insertLoan" parameterType="LoanDto" >
+		insert into loans(LOAN_ID,USER_ID,BOOK_ID) values(LOAN_SEQ.NEXTVAL,#{userId},#{bookId})
+	</insert>
+	
+	<update id="updateLoan" parameterType="long">
+		update loans set RETURN_DATE = SYSDATE WHERE LOAN_ID=#{loanId}
+	</update>
+</mapper>
