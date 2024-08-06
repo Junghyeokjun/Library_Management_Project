@@ -8,6 +8,7 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  Typography,
 } from "@mui/material";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
@@ -19,10 +20,14 @@ const BookManagement = (book) => {
   const [keyword, setKeyword] = useState("");
   const [inputKeyword, setInputKeyword] = useState("");
 
-  const onHandleRemoveChange = (id) => {
-    removeBook(id);
+  const onHandleRemoveChange = async (id) => {
+    try {
+      await removeBook(id); // removeBook 액션을 디스패치하고 완료될 때까지 기다림
+      await readBooks({ page: currentPage }); // removeBook이 완료된 후에 readBooks 액션을 디스패치
+    } catch (e) {
+      console.error(e); // 에러 처리
+    }
   };
-
   //페이지 전환시 이벤트
   const onHandlePageChange = (event, value) => {
     setCurrentPage(value);
@@ -49,7 +54,20 @@ const BookManagement = (book) => {
             {bookList.map((book) => (
               <TableRow key={book.bookId}>
                 <TableCell>{book.bookId}</TableCell>
-                <TableCell>{book.title}</TableCell>
+                <TableCell sx={{ color: "black", textDecoration: "none" }}>
+                  <Link
+                    to={`/bookdetail/${book.bookId}`}
+                    style={{ textDecoration: "none" }}
+                  >
+                    <Typography
+                      sx={{
+                        color: "black ",
+                      }}
+                    >
+                      {book.title}
+                    </Typography>
+                  </Link>
+                </TableCell>
                 <TableCell>{book.author}</TableCell>
                 <TableCell>{book.publishedDate}</TableCell>
                 <TableCell sx={{ width: "100px" }}>

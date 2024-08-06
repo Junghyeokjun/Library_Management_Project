@@ -49,18 +49,17 @@
 	</select>
 	
 	<select id="selectLoanCount" parameterType="SearchDto" resultType="long">
-	        SELECT l.*
-	        FROM (
-	            SELECT l.*
-	            FROM loans l
-	            WHERE 1 = 1
-	            <if test="id != 0">
-	                AND USER_ID = #{id}
-	            </if>
-	            <if test="returned">
-	            	AND RETURN_DATE IS NULL
-	            </if>
-	        ) l
+           SELECT count(*)
+           FROM loans l
+           JOIN
+           books b ON b.book_id=l.book_id
+           WHERE 1 = 1
+           <if test="id != 0">
+               AND USER_ID = #{id}
+           </if>
+           <if test="returned">
+           	AND RETURN_DATE IS NULL
+           </if>
 
 	</select>
 	

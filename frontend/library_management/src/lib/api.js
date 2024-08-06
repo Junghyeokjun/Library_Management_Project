@@ -80,6 +80,7 @@ export const putBook = (book) => {
     },
   });
 };
+
 export const deleteBook = (id) => {
   const url = new URL(apiLink + "book");
   url.searchParams.append("id", id);

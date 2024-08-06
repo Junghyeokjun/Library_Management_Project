@@ -5,10 +5,10 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.lang.Nullable;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.project.library_management.entity.Book;
 import com.project.library_management.entity.BookDetails;
 import com.project.library_management.entity.Category;
@@ -37,7 +37,7 @@ public class BookDto {
 	private String author;
 
 	// 도서의 출판날짜입니다.
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
 	private Date publishedDate;
 
 	// 도서의 isbn 번호입니다.
@@ -73,7 +73,7 @@ public class BookDto {
 	// 도서의 목차입니다.
 	private String tableOfContents;
 	
-	// 도서의 카테고리 목록입니다.
+	// 도서의 카테고리 목록입니다. 더이상 사용하지 않습니다.
 	private List<Long> categories;
 	
 	//도서를 업로드, 수정할때 사용되는 이미지 파일입니다.

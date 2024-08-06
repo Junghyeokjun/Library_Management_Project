@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.project.library_management.dto.SearchDto;
 import com.project.library_management.dto.UserDto;
@@ -22,6 +23,7 @@ public class UserServiceImpl implements UserService {
 		return user;
 	}
 
+	@Transactional
 	@Override
 	public int deleteUser(long id) {
 		return userMapper.deleteUser(id);

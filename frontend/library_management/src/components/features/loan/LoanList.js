@@ -30,6 +30,7 @@ const LoanList = ({ loans, pageCount, readLoans }) => {
         <Table size="small">
           <TableHead>
             <TableRow>
+              <TableCell>대출번호</TableCell>
               <TableCell>회원번호</TableCell>
               <TableCell>제목</TableCell>
               <TableCell>저자</TableCell>
@@ -39,7 +40,8 @@ const LoanList = ({ loans, pageCount, readLoans }) => {
           </TableHead>
           <TableBody>
             {loans.map((loan) => (
-              <TableRow key={loan.userId}>
+              <TableRow key={loan.loanId}>
+                <TableCell>{loan.loanId}</TableCell>
                 <TableCell>{loan.userId}</TableCell>
                 <TableCell>{loan.title}</TableCell>
                 <TableCell>{loan.author}</TableCell>

@@ -42,54 +42,56 @@
 		<result property="bookIntro" column="BOOK_INTRO" />
 		<result property="authorIntro" column="AUTHOR_INTRO" />
 		<result property="tableOfContents" column="TABLE_OF_CONTENTS" />
+	</resultMap>	
+	
+	<resultMap type="BookCategory" id="bookCategoryMap">
+		<id property="bookId" column="BOOK_ID" />
+		<result property="categoryId" column="CATEGORY_ID" />
 	</resultMap>
+	
 
-
-	<select id="selectBooks" parameterType="SearchDto"
-		resultMap="bookInnerDetailMap">
-		SELECT * FROM (
-			select *from (
-				SELECT sub.*, rownum rn FROM (
-					SELECT
-						b.*,
-						bd.book_intro,
-						bd.author_intro,
-						bd.table_of_contents,
-						c.name,
-						ROW_NUMBER() OVER (PARTITION BY b.book_id ORDER BY b.book_id) AS r
-					FROM
-						books b
-					JOIN
-						book_details bd ON b.book_id = bd.book_id
-					JOIN
-						book_categories bc ON b.book_id = bc.book_id
-					JOIN
-						categories c ON
-						bc.category_id = c.category_id
-					WHERE
-						1 = 1
-					<if test="category != 0">
-						AND bc.category_id = #{category}
-					</if>
-					<if test="keyword != ''">
-						<if test="option == 'title'">
-							AND b.title LIKE CONCAT('%', #{keyword}, '%')
-						</if>
-						<if test="option == 'author'">
-							AND b.author LIKE CONCAT('%', #{keyword}, '%')
-						</if>
-						<if test="option == 'publisher'">
-							AND b.publisher LIKE CONCAT('%', #{keyword}, '%')
-						</if>
-					</if>
-					sub where sub.r=1
-					)
-				WHERE rn <![CDATA[<=]]>
-				#{paging} * #{page}
-				)
-			WHERE rn <![CDATA[>]]>
-		#{paging} * (#{page} - 1)
+	<select id="selectBooks" parameterType="SearchDto" resultMap="bookInnerDetailMap">
+	    SELECT * FROM (
+	        SELECT sub.*, rownum rn FROM (
+	            SELECT
+	                b.*,
+	                bd.book_intro,
+	                bd.author_intro,
+	                bd.table_of_contents,
+	                c.name,
+	                c.category_id,
+	                ROW_NUMBER() OVER (PARTITION BY b.book_id ORDER BY b.book_id) AS r
+	            FROM
+	                books b
+	            JOIN
+	                book_details bd ON b.book_id = bd.book_id
+	            JOIN
+	                book_categories bc ON b.book_id = bc.book_id
+	            JOIN
+	                categories c ON bc.category_id = c.category_id
+	            WHERE
+	                1 = 1
+	            <if test="category != 0">
+	                AND bc.category_id = #{category}
+	            </if>
+	            <if test="keyword != ''">
+	                <if test="option == 'title'">
+	                    AND b.title LIKE CONCAT('%', #{keyword}, '%')
+	                </if>
+	                <if test="option == 'author'">
+	                    AND b.author LIKE CONCAT('%', #{keyword}, '%')
+	                </if>
+	                <if test="option == 'publisher'">
+	                    AND b.publisher LIKE CONCAT('%', #{keyword}, '%')
+	                </if>
+	            </if>
+	            ) sub
+	        WHERE sub.r = 1
+	    )
+	    WHERE rn <![CDATA[<=]]> #{paging} * #{page}
+	    AND rn <![CDATA[>]]> #{paging} * (#{page} - 1)
 	</select>
+
 	
 	<select id="selectBookCount" parameterType="SearchDto" resultType="long">
 		SELECT
@@ -122,9 +124,11 @@
 	</select>
 	
 	
-	<select id="selectBook" resultMap="bookMap">
-		select * from books where
-		book_id=#{id}
+	<select id="selectBook" resultMap="bookInnerDetailMap">
+		select b.*,bd.BOOK_INTRO,bd.AUTHOR_INTRO,bd.TABLE_OF_CONTENTS from books b
+		JOIN
+		book_details bd ON b.book_id=bd.book_id 
+		Where b.book_id=#{id}
 	</select>
 
 	<insert id="insertBook" parameterType="Book">
@@ -199,5 +203,32 @@
 		DELETE FROM Books WHERE book_id=#{id}
 	</delete>
 	
+	<update id="updateBoakAvail">
+        UPDATE books
+        SET
+		<if test="loan">
+		AVAILABLE_COPIES=AVAILABLE_COPIES+1
+		</if>
+		<if test="!loan">
+		AVAILABLE_COPIES=AVAILABLE_COPIES-1
+		</if>
+			
+        WHERE book_id = #{id}
+    </update>
+
+	<select id="selectCategory" parameterType="long" resultMap="bookCategoryMap">
+		select * from book_categories where BOOK_ID=#{id}
+	</select>
+
+	<insert id="insertBookCategory" parameterType="BookDto">
+		INSERT INTO book_categories VALUES (#{bookId}, #{category})
+	</insert>
+
+	<update id="updateBookCategory" parameterType="BookDto">
+		UPDATE book_categories
+        SET
+        CATEGORY_ID = #{category}
+        WHERE book_id = #{bookId}
+	</update>
 
 </mapper>

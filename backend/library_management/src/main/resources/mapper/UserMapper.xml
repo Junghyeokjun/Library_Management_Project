@@ -35,7 +35,9 @@
 	        SELECT l.*, rownum as rn
 	        FROM (
 	            SELECT sub.*,rownum from(select users.*, COALESCE(count(loans.user_id), 0) AS LOAN_COUNT 
-                    from users LEFT JOIN loans on loans.user_id=users.user_id 
+                    from users 
+                    LEFT JOIN (select loans.* from books JOIN loans on books.book_id=loans.book_id)loans 
+                    on loans.user_id=users.user_id and loans.RETURN_DATE is null
                     GROUP BY 
                     loans.user_id, 
                     users.user_id, 

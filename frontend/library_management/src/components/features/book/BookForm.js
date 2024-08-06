@@ -47,7 +47,6 @@ const BookForm = ({ book, bookId, addBook, modifyBook, modified }) => {
   const [imagePreview, setImagePreview] = useState(
     modified ? book.imagePath : null
   );
-  console.log(bookId);
   useEffect(() => {
     if (modified && book) {
       const {
@@ -75,10 +74,12 @@ const BookForm = ({ book, bookId, addBook, modifyBook, modified }) => {
         tableOfContents,
         category,
       });
-      console.log(bookDetails);
     }
   }, [book]);
 
+  useEffect(() => {
+    setImagePreview(book.imagePath);
+  }, [book.imagePath]);
   const handleChange = (e) => {
     const { name, value } = e.target;
     setBookDetails((prevDetails) => ({
@@ -114,7 +115,7 @@ const BookForm = ({ book, bookId, addBook, modifyBook, modified }) => {
 
     try {
       modified ? await modifyBook(formData) : await addBook(formData);
-      navigate("/");
+      navigate("/bookmanagement");
     } catch (error) {
       console.log(error);
     }
@@ -262,7 +263,7 @@ const BookForm = ({ book, bookId, addBook, modifyBook, modified }) => {
                   책 이미지 업로드
                 </Button>
               </label>
-              {image && (
+              {(imagePreview || image) && (
                 <Box sx={{ mt: 2 }}>
                   <img
                     src={imagePreview}

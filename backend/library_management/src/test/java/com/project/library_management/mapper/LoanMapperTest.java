@@ -7,7 +7,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import com.project.library_management.dto.LoanDto;
 import com.project.library_management.dto.SearchDto;
-import com.project.library_management.entity.Loan;
 
 @SpringBootTest
 class LoanMapperTest {

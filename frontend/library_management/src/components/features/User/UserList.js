@@ -26,8 +26,13 @@ const UserList = ({ users, pageCount, readUsers, removeUser }) => {
     readUsers({ page: value });
   };
 
-  const handelRemoveClick = (id) => {
-    removeUser(id);
+  const handelRemoveClick = async (id) => {
+    try {
+      await removeUser(id);
+      await readUsers({ page: currentPage });
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   return (

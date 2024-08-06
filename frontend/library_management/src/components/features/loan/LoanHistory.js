@@ -11,7 +11,7 @@ const LoanHistory = ({ loans, pageCount, readLoans }) => {
 
   const handlePageChange = (event, value) => {
     setCurrentPage(value);
-    readLoans({ page: value, returned: true });
+    readLoans({ page: value, returned: false });
   };
 
   return (

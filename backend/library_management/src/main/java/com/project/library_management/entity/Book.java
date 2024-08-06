@@ -2,7 +2,6 @@ package com.project.library_management.entity;
 
 import java.sql.Date;
 import java.sql.Timestamp;
-import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -48,8 +47,8 @@ public class Book {
 	// 도서의 출판사입니다.
 	private String publisher;
 
-	// n:m 관계 = 도서는 여러개의 카테고리를 지닐수 있습니다.
-	private List<Category> categories;
+	// 1:n 관계 = 도서는 하나의 카테고리를 지닐나 카테고리는 여러 도서의 분류를 나타냅니다.
+	private Category category;
 
 	//1:1 관계 = 도서는 하나의 상세설명을 지닙니다.
 	private BookDetails detail;

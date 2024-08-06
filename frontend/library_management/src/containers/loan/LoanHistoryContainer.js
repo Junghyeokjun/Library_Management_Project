@@ -5,7 +5,7 @@ import LoanHistory from "@components/features/loan/LoanHistory";
 
 const LoanHistoryContainer = ({ loans, pageCount, readLoans }) => {
   useEffect(() => {
-    readLoans({ paging: 20, returned: true });
+    readLoans({ paging: 20, returned: false });
   }, []);
   return (
     <LoanHistory loans={loans} pageCount={pageCount} readLoans={readLoans} />

@@ -35,7 +35,7 @@ class UserMapperTest {
 		System.out.println(userMapper.selectUserCount());
 	}
 
-//	@Disabled
+	@Disabled
 	@Test
 	void deleteUserTest() {
 		System.out.println(userMapper.deleteUser(4));

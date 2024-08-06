@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 import com.project.library_management.dto.BookDto;
 import com.project.library_management.dto.SearchDto;
 import com.project.library_management.entity.Book;
+import com.project.library_management.entity.BookCategory;
 
 @Mapper
 public interface BookMapper {
@@ -34,4 +35,16 @@ public interface BookMapper {
 	
 	//book_id를 이용해 테이블의 도서를 삭제하는 메서드
 	public int deleteBook(long id);
+	
+	//book_id를 이용해 테이블의 도서 대출현황을 업데이트 하는 메서드
+	public int updateBoakAvail(long id,boolean loan);
+
+	//book_id를 이용해 테이블 도서의 카테고리를 얻어오는 메서드
+	public BookCategory selectCategory(long id);
+	
+	//bookDto를 이용해 테이블 도서의 카테고리를 추가하는 메서드
+	public int insertBookCategory(BookDto book);
+	
+	//bookDto를 이용하여 테이블 도서의 카테고리를 수정하는 메서드
+	public int updateBookCategory(BookDto book);
 }

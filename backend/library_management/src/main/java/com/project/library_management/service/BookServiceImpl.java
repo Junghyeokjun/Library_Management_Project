@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.project.library_management.dto.BookDto;
 import com.project.library_management.dto.SearchDto;
@@ -21,26 +22,33 @@ public class BookServiceImpl implements BookService {
 	public BookDto getBook(long id) {
 		BookDto book = new BookDto();
 		book.setBook(bookMapper.selectBook(id));
+		book.setCategory(bookMapper.selectCategory(id).getCategoryId());
 
 		return book;
 	}
 
+	@Transactional
 	@Override
 	public int createBook(BookDto book) {
 
 		bookMapper.insertBook(book);
-
-		return bookMapper.insertBookDetails(book);
+		bookMapper.insertBookDetails(book);
+		
+		return bookMapper.insertBookCategory(book);
 	}
 
+	@Transactional
 	@Override
 	public int updateBook(BookDto book) {
 		
 		bookMapper.updateBook(book);
+		bookMapper.updateBookDetails(book);
+		bookMapper.updateBookCategory(book);
 		
 		return bookMapper.updateBookDetails(book);
 	}
 
+	@Transactional
 	@Override
 	public int deleteBook(long id) {
 		
@@ -61,7 +69,7 @@ public class BookServiceImpl implements BookService {
 
 	@Override
 	public long getBookCount(SearchDto search) {
-		return getBookCount(search);
+		return bookMapper.selectBookCount(search);
 	}
 
 }

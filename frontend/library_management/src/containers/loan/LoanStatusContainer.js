@@ -5,7 +5,7 @@ import LoanStatus from "@components/features/loan/LoanStatus";
 
 const LoanStatusContainer = ({ loans, readLoadStatus }) => {
   useEffect(() => {
-    readLoadStatus({ paging: 4 });
+    readLoadStatus({ paging: 4, returned: true });
   }, []);
   return <LoanStatus loans={loans} />;
 };
