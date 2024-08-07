@@ -76,13 +76,13 @@
 	            </if>
 	            <if test="keyword != ''">
 	                <if test="option == 'title'">
-	                    AND b.title LIKE CONCAT('%', #{keyword}, '%')
+	                    AND b.title LIKE <![CDATA['%' || #{keyword} || '%']]>
 	                </if>
 	                <if test="option == 'author'">
-	                    AND b.author LIKE CONCAT('%', #{keyword}, '%')
+	                    AND b.author LIKE <![CDATA['%' || #{keyword} || '%']]>
 	                </if>
 	                <if test="option == 'publisher'">
-	                    AND b.publisher LIKE CONCAT('%', #{keyword}, '%')
+	                    AND b.publisher LIKE <![CDATA['%' || #{keyword} || '%']]>
 	                </if>
 	            </if>
 	            ) sub
@@ -112,13 +112,13 @@
 		</if>
 		<if test="keyword != ''">
 			<if test="option == 'title'">
-				AND b.title LIKE CONCAT('%', #{keyword}, '%')
+				AND b.title LIKE <![CDATA['%' || #{keyword} || '%']]>
 			</if>
 			<if test="option == 'author'">
-				AND b.author LIKE CONCAT('%', #{keyword}, '%')
+				AND b.author LIKE <![CDATA['%' || #{keyword} || '%']]>
 			</if>
 			<if test="option == 'publisher'">
-				AND b.publisher LIKE CONCAT('%', #{keyword}, '%')
+				AND b.publisher LIKE <![CDATA['%' || #{keyword} || '%']]>
 			</if>
 		</if>
 	</select>
@@ -131,7 +131,7 @@
 		Where b.book_id=#{id}
 	</select>
 
-	<insert id="insertBook" parameterType="Book">
+	<insert id="insertBook" parameterType="BookDto">
 		<selectKey keyProperty="bookId" resultType="long"
 			order="BEFORE">
 			SELECT book_seq.NEXTVAL FROM DUAL
@@ -152,7 +152,7 @@
 			#{bookId},
 			#{title},
 			#{author},
-			TO_DATE(#{publishedDate}, 'YYYY-MM-DD'),
+			#{publishedDate},
 			#{isbn},
 			0,
 			#{totalCopies},
@@ -176,12 +176,12 @@
 		)
 	</insert>
 
-    <update id="updateBook" parameterType="Book">
+    <update id="updateBook" parameterType="BookDto">
         UPDATE books
         SET
             title = #{title},
             author = #{author},
-            published_date = TO_DATE(#{publishedDate}, 'YYYY-MM-DD'),
+            published_date = #{publishedDate},
             isbn = #{isbn},
             total_copies = #{totalCopies},
             updated_at = SYSTIMESTAMP,

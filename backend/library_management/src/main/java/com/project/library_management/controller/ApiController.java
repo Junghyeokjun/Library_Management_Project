@@ -89,6 +89,8 @@ public class ApiController {
 			if(book.getImage()!=null) {
 				cloudService.deleteFileFromUrl(bookService.getBook(book.getBookId()).getImagePath());
 				book.setImagePath(cloudService.uploadFile(book.getImage()));
+			}else {
+				book.setImagePath(bookService.getBook(book.getBookId()).getImagePath());
 			}
 			
 			//반환값이 0일경우 변경된게 없다는 뜻이므로

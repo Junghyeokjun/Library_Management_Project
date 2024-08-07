@@ -3,8 +3,6 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
@@ -12,21 +10,37 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import Copyright from "@lib/Copyright";
+import { useNavigate } from "react-router-dom";
+import { red } from "@mui/material/colors";
 //해당 component는 머티리얼 ui의 템플릿을 사용한 코드입니다.
 
 const defaultTheme = createTheme();
 
-export default function SignIn() {
-  const handleSubmit = (event) => {
+export default function SignIn({ isAuthenticated, login }) {
+  const navigate = useNavigate();
+  const [loginFail, setLoginFail] = React.useState("ㅤ");
+  if (isAuthenticated) {
+    navigate("/");
+  }
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
+    try {
+      await login({
+        username: data.get("email"),
+        password: data.get("password"),
+      });
+    } catch (e) {
+      if (e.response && e.response.status === 401) {
+        setLoginFail("잘못된 이메일 또는 비밀번호를 입력하셨습니다.");
+      }
+    }
   };
-
+  React.useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/"); // 로그인 성공 후 이동할 경로
+    }
+  }, [isAuthenticated, navigate]);
   return (
     <Box
       sx={{
@@ -79,15 +93,18 @@ export default function SignIn() {
                 id="password"
                 autoComplete="current-password"
               />
-              <FormControlLabel
+              <Typography sx={{ fontSize: "0.7em", color: "red" }}>
+                {loginFail}
+              </Typography>
+              {/* <FormControlLabel
                 control={<Checkbox value="remember" color="primary" />}
                 label="아이디 기억하기"
-              />
+              /> */}
               <Button
                 type="submit"
                 fullWidth
                 variant="contained"
-                sx={{ mt: 3, mb: 2 }}
+                sx={{ mt: 1, mb: 2 }}
               >
                 로그인
               </Button>

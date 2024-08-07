@@ -10,7 +10,7 @@ import {
 import Book from "./Book";
 
 const BookList = ({ bookList }) => {
-  return (
+  return bookList.length !== 0 ? (
     <Container
       sx={{
         display: "flex",
@@ -39,6 +39,19 @@ const BookList = ({ bookList }) => {
           </TableBody>
         </Table>
       </TableContainer>
+    </Container>
+  ) : (
+    <Container
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        padding: "20px 0px",
+        minHeight: "70vh",
+      }}
+    >
+      해당하는 도서가 없습니다.
     </Container>
   );
 };

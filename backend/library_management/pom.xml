@@ -127,6 +127,29 @@
 	        <artifactId>spring-cloud-gcp-storage</artifactId>
 	        <version>1.2.5.RELEASE</version>
 	    </dependency>
+	    
+	     <!-- Spring Security -->
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-security</artifactId>
+    </dependency>
+    
+    <!-- JWT Library -->
+    <dependency>
+        <groupId>io.jsonwebtoken</groupId>
+        <artifactId>jjwt</artifactId>
+        <version>0.9.1</version>
+    </dependency>
+    
+    <!-- java9부터는 아래의 라이브러리가 제거됨 -->
+    <dependency>
+	    <groupId>javax.xml.bind</groupId>
+	    <artifactId>jaxb-api</artifactId>
+	    </dependency>
+	<dependency>
+	    <groupId>org.glassfish.jaxb</groupId>
+	    <artifactId>jaxb-runtime</artifactId>
+	</dependency>
 	</dependencies>
 
 	<build>

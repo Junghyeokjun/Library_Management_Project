@@ -1,10 +1,9 @@
 import axios from "axios";
-import { useState } from "react";
-import Header from "@components/layout/Header";
+import { useEffect, useState } from "react";
 import Footer from "@components/layout/Footer";
 import MainPage from "@pages/book/MainPage";
-import SignInPage from "@pages/user/SignInPage";
-import SignUpPage from "@pages/user/SingUpPage";
+import SignInPage from "@pages/auth/SignInPage";
+import SignUpPage from "@pages/auth/SingUpPage";
 import BookDetailPage from "@pages/book/BookDetailPage";
 import MyPage from "@pages/user/MyPage";
 import { Box } from "@mui/material";
@@ -14,19 +13,25 @@ import LoanListPage from "@pages/loan/LoanListPage";
 import BookAddPage from "@pages/book/BookAddPage";
 import BookModifyPage from "@pages/book/BookModifyPage";
 import { Route, Routes } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { tokenUpdate } from "@modules/auth";
+import HeaderContainer from "@containers/layout/HeaderContainer";
 function App() {
-  const [api, setApi] = useState("");
+  const dispatch = useDispatch();
 
-  const onClick = () => {
-    axios.get("http://localhost:8080/api/test/1").then((response) => {
-      console.log(response.data);
-      setApi(response.data);
-    });
-  };
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        await dispatch(tokenUpdate());
+      } catch (e) {}
+    };
+
+    fetchData();
+  });
 
   return (
     <Box sx={{ minHeight: "100vh", display: "flex", flexDirection: "column" }}>
-      <Header />
+      <HeaderContainer />
       <Box sx={{ flexGrow: 1 }}>
         <Routes>
           <Route path="/" element={<MainPage />}></Route>
