@@ -11,7 +11,7 @@ import com.project.library_management.dto.UserDto;
 class UserMapperTest {
 
 	@Autowired
-	UserMapper userMapper;
+	private UserMapper userMapper;
 	
 	@Disabled
 	@Test
@@ -37,8 +37,30 @@ class UserMapperTest {
 
 	@Disabled
 	@Test
+	void insertUserTest() {
+		UserDto user=new UserDto();
+		user.setUserName("test");
+		user.setEmail("test@test");
+		user.setPassword("1234");
+		
+		System.out.println(userMapper.insertUser(user));
+	}
+	
+	@Disabled
+	@Test
 	void deleteUserTest() {
 		System.out.println(userMapper.deleteUser(4));
 	}
+	
+	@Disabled
+	@Test
+	void selectAuthuserTest() {
+		System.out.println(userMapper.selectAuthUser("john.doe@example.com"));
+	}
 
+	@Disabled
+	@Test
+	void checkEmailTest() {
+		System.out.println(userMapper.checkEmail("test@test"));
+	}
 }

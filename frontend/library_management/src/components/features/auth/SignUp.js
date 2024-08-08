@@ -10,21 +10,41 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { useNavigate } from "react-router-dom";
 
 //해당 component는 머티리얼 ui의 템플릿을 사용한 코드입니다.
 
 const defaultTheme = createTheme();
 
-export default function SignUp() {
-  const handleSubmit = (event) => {
+export default function SignUp({ isAuthenticated, signUp }) {
+  const navigate = useNavigate();
+  const [signUpFail, setSignUpFail] = React.useState("ㅤ");
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
-  };
 
+    try {
+      const name = data.get("firstName").concat(data.get("lastName"));
+      console.log(name);
+      await signUp({
+        email: data.get("email"),
+        password: data.get("password"),
+        //한국인은 성이 앞에 오므로 lastName+fistName
+        userName: name,
+      });
+    } catch (e) {
+      //후에 오류에 따라 처리
+      setSignUpFail("중복된 이메일입니다.");
+    }
+
+    navigate("/");
+  };
+  React.useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/"); // 인증이 되있을시 메인페이지로 리다이렉트
+    }
+  }, [isAuthenticated, navigate]);
   return (
     <Box
       sx={{
@@ -110,6 +130,9 @@ export default function SignUp() {
               </Grid> */}
                 {/* 이메일 동의 기능이 필요할때 사용 */}
               </Grid>
+              <Typography sx={{ fontSize: "0.7em", color: "red" }}>
+                {signUpFail}
+              </Typography>
               <Button
                 type="submit"
                 fullWidth

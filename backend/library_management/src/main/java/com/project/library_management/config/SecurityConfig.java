@@ -14,7 +14,6 @@ import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import com.project.library_management.security.CustomUserDetailsService;
 import com.project.library_management.security.JwtAuthenticationFilter;
 
 @Configuration
@@ -22,10 +21,10 @@ import com.project.library_management.security.JwtAuthenticationFilter;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
-	UserDetailsService userDetailsService;
+	private UserDetailsService userDetailsService;
 	
     @Autowired
-    JwtAuthenticationFilter jwtAuthenticationFilter;
+    private JwtAuthenticationFilter jwtAuthenticationFilter;
 
     @Bean
     @Override

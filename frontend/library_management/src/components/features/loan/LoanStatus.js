@@ -1,5 +1,6 @@
-import { Box, Typography } from "@mui/material";
+import { Box, css, Typography } from "@mui/material";
 import React from "react";
+import { Link } from "react-router-dom";
 
 const LoanStatus = ({ loans }) => {
   const isLoaned = loans.length === 0;
@@ -41,18 +42,24 @@ const LoanStatus = ({ loans }) => {
                 textAlign: "center",
               }}
             >
-              <img src={loan.imagePath} alt="" width="150px" height="235px" />
-              <Typography
-                variant="h5"
-                sx={{
-                  whiteSpace: "nowrap",
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                  width: "150px",
-                }}
+              <Link
+                to={`/bookdetail/${loan.bookId}`}
+                style={{ textDecoration: "none" }}
               >
-                {loan.title}
-              </Typography>
+                <img src={loan.imagePath} alt="" width="150px" height="235px" />
+                <Typography
+                  variant="h5"
+                  sx={{
+                    whiteSpace: "nowrap",
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                    width: "150px",
+                    color: "black",
+                  }}
+                >
+                  {loan.title}
+                </Typography>
+              </Link>
             </Box>
           ))}
         </Box>

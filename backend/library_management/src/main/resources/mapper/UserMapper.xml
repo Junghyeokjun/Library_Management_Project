@@ -61,6 +61,11 @@
 	<select id="selectUserCount" resultType="long">
 		select count(*) from users
 	</select>
+	<insert id="insertUser" parameterType="UserDto">
+		insert into users(user_id,username,password,email) 
+		values(user_seq.nextval,#{userName},#{password},#{email})
+	</insert>
+	
 	<delete id="deleteUser" parameterType="long">
 		delete from users where user_id=#{id}
 	</delete>
@@ -69,5 +74,8 @@
 		select * from users where email=#{email}
 	</select>
 	
+	<select id="checkEmail" parameterType="String" resultType="int">
+		select count(*) from users where email=#{email}
+	</select>
 
 </mapper>

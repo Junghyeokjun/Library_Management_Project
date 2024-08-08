@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import com.project.library_management.constant.LoanAvailabilityOption;
 import com.project.library_management.dto.LoanDto;
 import com.project.library_management.dto.SearchDto;
 
@@ -14,6 +15,13 @@ class LoanMapperTest {
 	@Autowired
 	LoanMapper loanMapper;
 
+	
+	@Disabled
+	@Test
+	public void selectLoanTest() {
+		System.out.println(loanMapper.selectLoan(1, 4));
+	}
+	
 	@Disabled
 	@Test
 	public void selectLoansTest() {
@@ -40,13 +48,23 @@ class LoanMapperTest {
 		System.out.println(loanMapper.insertLoan(loan));
 		
 	}
-	
+
 	@Disabled
 	@Test
 	public void updateLoanTest() {
 		System.out.println(loanMapper.updateLoan(3));
 		
 	}
+	
+	@Disabled
+	@Test
+	public void updateCopiesTest() {
+		System.out.println(loanMapper.updateCopies(1, LoanAvailabilityOption.LOAN_LOAN));
+		System.out.println(loanMapper.updateCopies(1, LoanAvailabilityOption.LOAN_RETURN));
+	}
+	
+	
+
 
 
 }

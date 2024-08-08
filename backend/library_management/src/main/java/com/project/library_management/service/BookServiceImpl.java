@@ -16,7 +16,7 @@ import com.project.library_management.mapper.BookMapper;
 public class BookServiceImpl implements BookService {
 
 	@Autowired
-	BookMapper bookMapper;
+	private BookMapper bookMapper;
 
 	@Override
 	public BookDto getBook(long id) {

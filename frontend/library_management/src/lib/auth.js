@@ -33,7 +33,7 @@ export const putAuth = () => {
   const refreshToken = localStorage.getItem("refreshToken");
 
   return axios
-    .put(authLink + "refresh", refreshToken)
+    .put(authLink + "refresh", { refreshToken: refreshToken })
     .then((response) => response)
     .catch((e) => {
       console.log(e);

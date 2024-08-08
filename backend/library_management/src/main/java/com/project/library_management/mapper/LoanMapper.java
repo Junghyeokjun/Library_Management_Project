@@ -6,10 +6,14 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.project.library_management.dto.LoanDto;
 import com.project.library_management.dto.SearchDto;
+import com.project.library_management.entity.Loan;
 
 @Mapper
 public interface LoanMapper {
 
+	//user_id와 book_id를 통해 대출여부를 얻어오는 메서드
+	public Loan selectLoan(long userId,long bookId);
+	
 	//SerchDto를 이용하여 유저의 대출내역을 얻어오는 메서드
 	public List<LoanDto> selectLoans(SearchDto search);
 	
@@ -21,4 +25,9 @@ public interface LoanMapper {
 	
 	//loan_id를 이용하여 유저의 대출정보를 업데이트 하는 메서드
 	public int updateLoan(long id);
+	
+	//book_id를 통해 책의 대출권수를 업데이트 하는 메서드
+	public int updateCopies(long id,String option);
+	
+
 }

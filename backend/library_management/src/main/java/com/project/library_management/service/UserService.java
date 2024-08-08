@@ -10,6 +10,9 @@ public interface UserService {
 	//해당 id를 가진 유저의 정보를 반환하는 메서드
 	public UserDto getUser(long id);
 	
+	//해당 유저정보를 DB에 추가하는 메서드
+	public boolean createUser(UserDto user);
+	
 	//해당 id를 가진 유저의 정보를 삭제하는 메서드
 	public int deleteUser(long id);
 	

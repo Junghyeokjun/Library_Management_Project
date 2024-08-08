@@ -9,11 +9,23 @@ import {
   TableRow,
   Typography,
 } from "@mui/material";
-import React from "react";
+import { jwtDecode } from "jwt-decode";
+import React, { useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 
-const BookDetail = ({ book }) => {
+const BookDetail = ({
+  userId,
+  book,
+  isAuthenticated,
+  loan,
+  readBook,
+  readLoan,
+  addLoan,
+  modifyLoan,
+}) => {
+  const navigate = useNavigate();
   const {
-    id,
+    bookId,
     title,
     author,
     publishedDate,
@@ -24,7 +36,6 @@ const BookDetail = ({ book }) => {
   } = book;
 
   const isDisabled = availableCopies === totalCopies;
-
   const details = [
     { label: "저자", value: author },
     { label: "출판사", value: publisher },
@@ -36,6 +47,27 @@ const BookDetail = ({ book }) => {
       }(${availableCopies}/${totalCopies})`,
     },
   ];
+
+  const handleOnClick = async () => {
+    if (isAuthenticated) {
+      try {
+        if (loan !== null && loan !== "") {
+          //반납
+          await modifyLoan({ loanId: loan.loanId, bookId: bookId });
+        } else {
+          //대출
+          await addLoan({ userId: userId, bookId: bookId });
+        }
+        await readBook(bookId);
+        await readLoan({ bookid: bookId, userid: userId });
+      } catch (e) {
+        console.log(e);
+      }
+    } else {
+      navigate("/login");
+    }
+  };
+
   return (
     <Box
       sx={{
@@ -140,8 +172,9 @@ const BookDetail = ({ book }) => {
                   variant="contained"
                   sx={{ width: "100px", height: "40px" }}
                   disabled={isDisabled}
+                  onClick={() => handleOnClick()}
                 >
-                  대출
+                  {loan ? "반납" : "대출"}
                 </Button>
               </Box>
             </Box>

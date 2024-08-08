@@ -23,7 +23,6 @@ const ResponsiveAppBar = ({ isAuthenticated, token, logout }) => {
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const navigite = useNavigate();
   const role = token ? jwtDecode(token).role : false;
-
   const handleOpenUserMenu = (event) => {
     if (isAuthenticated) {
       setAnchorElUser(event.currentTarget);
@@ -92,7 +91,7 @@ const ResponsiveAppBar = ({ isAuthenticated, token, logout }) => {
             <HomeIcon />
           </Typography>
           <Box sx={{ flexGrow: 1, display: "flex" }}>
-            {isAuthenticated && role !== "ROLE_ADMIN"
+            {isAuthenticated && role[0].authority === "ROLE_ADMIN"
               ? pages.map((page) => (
                   <Button
                     key={page}

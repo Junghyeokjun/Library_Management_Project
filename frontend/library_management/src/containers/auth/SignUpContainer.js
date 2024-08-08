@@ -1,15 +1,15 @@
-import SignIn from "@components/features/auth/SignIn";
-import { logout } from "@modules/auth";
+import SignUp from "@components/features/auth/SignUp";
+import { addUser } from "@modules/user";
 import React from "react";
 import { connect } from "react-redux";
 
-const SignInContainer = ({ isAuthenticated, login }) => {
-  return <SignIn isAuthenticated={isAuthenticated} login={login} />;
+const SignUpContainer = ({ isAuthenticated, addUser }) => {
+  return <SignUp isAuthenticated={isAuthenticated} signUp={addUser} />;
 };
 
 export default connect(
   ({ auth }) => ({
     isAuthenticated: auth.isAuthenticated,
   }),
-  { logout }
-)(SignInContainer);
+  { addUser }
+)(SignUpContainer);

@@ -19,9 +19,6 @@ const defaultTheme = createTheme();
 export default function SignIn({ isAuthenticated, login }) {
   const navigate = useNavigate();
   const [loginFail, setLoginFail] = React.useState("ㅤ");
-  if (isAuthenticated) {
-    navigate("/");
-  }
   const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);

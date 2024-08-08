@@ -21,6 +21,7 @@ import com.project.library_management.dto.BookDto;
 import com.project.library_management.dto.LoanDto;
 import com.project.library_management.dto.SearchDto;
 import com.project.library_management.dto.UserDto;
+import com.project.library_management.mapper.UserMapper;
 import com.project.library_management.service.BookService;
 import com.project.library_management.service.GoogleCloudStorageService;
 import com.project.library_management.service.LoanService;
@@ -31,16 +32,16 @@ import com.project.library_management.service.UserService;
 public class ApiController {
 
 	@Autowired
-	GoogleCloudStorageService cloudService;
+	private GoogleCloudStorageService cloudService;
 
 	@Autowired
-	BookService bookService;
+	private BookService bookService;
 	
 	@Autowired
-	LoanService loanService;
+	private LoanService loanService;
 	
 	@Autowired
-	UserService userService;
+	private UserService userService;
 	
 	@GetMapping("/test/{category}")
 	public String test(@PathVariable("category") String category) {
@@ -147,6 +148,14 @@ public class ApiController {
 		return booksData;
 	}
 
+
+	// GET: /api/loan?bookid= &userid=
+	//해당 유저가 해당 도서를 대출했다면 대출내역 반환
+	@GetMapping("/loan")
+	public LoanDto getloan (@RequestParam("bookid") long bookId,@RequestParam("userid") long userId) {
+		return loanService.getLoan(userId, bookId);
+	}
+	
 	// POST: /api/loan
 	// 해당 대출정보를 DB에 저장
 	@PostMapping("/loan")
@@ -169,12 +178,12 @@ public class ApiController {
 	// PUT: /api/loan
 	// 해당 대출정보를 DB에서 수정
 	@PutMapping("/loan")
-	public String updateLoan(@RequestBody long id) {
+	public String updateLoan(@RequestBody LoanDto loan) {
 
-		System.out.println("updateLoan");
+		System.out.println(loan);
 		try {			
 			//반환값이 0일경우 삭제된 행이 없으므로 실패
-			if(loanService.updateLoan(id)==0) {
+			if(loanService.updateLoan(loan)==0) {
 				return ResponseMesaages.FAILURE;
 			}
 		} catch (Exception e) {
@@ -200,8 +209,8 @@ public class ApiController {
 		loansData.put("pageCount", pageCount);
 
 		return loansData;
-	}
-
+	}	
+	
 	// GET: /api/user?id=
 	// 해당 조건에 해당하는 유저 정보 반환
 	@GetMapping("/user")
@@ -211,6 +220,23 @@ public class ApiController {
 		return userService.getUser(id);
 	}
 
+	// POST: /api/user
+	//	해당유저정보를 DB에 저장
+	@PostMapping("/user")
+	public String createUser(@RequestBody UserDto user ) {
+		try {			
+			//true일경우 추가성공 
+			if(!userService.createUser(user)) {
+				return ResponseMesaages.FAILURE;
+			}
+		} catch (Exception e) {
+			return ResponseMesaages.ERROR;
+		}
+
+		return ResponseMesaages.SUCCESS;
+	
+	}
+	
 	// DELETE: /api/user?id=
 	// 해당 조건에 해당하는 유저 정보 삭제
 	@DeleteMapping("/user")

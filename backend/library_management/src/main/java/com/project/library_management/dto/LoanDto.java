@@ -49,8 +49,8 @@ public class LoanDto {
 	//Loan 엔티티를 이용해 데이터를 입력하는 세터함수입니다.
 	public void setLoan(Loan loan) {
 		this.setLoanId(loan.getLoanId());
-		this.setLoanId(loan.getBookId());
-		this.setLoanId(loan.getUserId());
+		this.setBookId(loan.getBookId());
+		this.setUserId(loan.getUserId());
 		this.setLoanDate(loan.getLoanDate());
 		this.setReturnDate(loan.getReturnDate());
 		this.setOverDue(loan.getOverDue());

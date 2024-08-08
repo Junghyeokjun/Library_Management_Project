@@ -3,7 +3,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.project.library_management.mapper.LoanMapper">
 
-	<!-- 기본적인 loan엔티티를 후에 쓸일이 있을지 몰라 미리 정의해두었습니다. -->
+	<!-- 기본적인 loan엔티티입니다. -->
 	<resultMap type="Loan" id="loanMap">
 		<id property="loanId" column="LOAN_ID"/>
 		<result property="userId" column="USER_ID"/>
@@ -13,7 +13,7 @@
 		<result property="overDue" column="OVERDUE"/>		
 	</resultMap>
 	
-	<!-- 실질적으로 쓰이는 loanDto입니다. -->	
+	<!-- 리스트 반환시 쓰이는 loanDto입니다. -->	
 	<resultMap type="LoanDto" id="loanDtoMap">
 		<id property="loanId" column="LOAN_ID"/>
 		<result property="userId" column="USER_ID"/>
@@ -26,6 +26,11 @@
 		<result property="imagePath" column="IMAGE_PATH"/>		
 	</resultMap>
 	
+	
+	<select id="selectLoan" resultMap="loanMap">
+		select * from loans 
+		where book_id=#{bookId} and user_id=#{userId} and RETURN_DATE is Null
+	</select>
 	
 	<select id="selectLoans" parameterType="SearchDto" resultMap="loanDtoMap">
 	    SELECT * FROM (
@@ -70,4 +75,16 @@
 	<update id="updateLoan" parameterType="long">
 		update loans set RETURN_DATE = SYSDATE WHERE LOAN_ID=#{loanId}
 	</update>
+	
+	<update id="updateCopies" >
+		update books set 
+		<if test="option.equals('LOAN_RETURN')">
+			AVAILABLE_COPIES=AVAILABLE_COPIES-1
+		</if>
+		<if test="option.equals('LOAN_LOAN')">
+			AVAILABLE_COPIES=AVAILABLE_COPIES+1
+		</if>
+		where book_id=#{id}
+	</update>
+	
 </mapper>

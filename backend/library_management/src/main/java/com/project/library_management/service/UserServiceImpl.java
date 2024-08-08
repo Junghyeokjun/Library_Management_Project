@@ -14,7 +14,7 @@ import com.project.library_management.mapper.UserMapper;
 public class UserServiceImpl implements UserService {
 
 	@Autowired
-	UserMapper userMapper;
+	private UserMapper userMapper;
 	
 	@Override
 	public UserDto getUser(long id) {
@@ -23,6 +23,22 @@ public class UserServiceImpl implements UserService {
 		return user;
 	}
 
+	@Transactional
+	@Override
+	public boolean createUser(UserDto user) {
+		
+		//0이 아닐경우 중복이메일
+		if(userMapper.checkEmail(user.getEmail())!=0) {
+			return false;
+		}
+		//데이터베이스에 성공적으로 추가됬을시 반환값은 1
+		int result= userMapper.insertUser(user);
+		
+		System.out.println(result);
+		
+		return result==1;
+	}
+	
 	@Transactional
 	@Override
 	public int deleteUser(long id) {
@@ -38,5 +54,6 @@ public class UserServiceImpl implements UserService {
 	public long getUserCount() {
 		return userMapper.selectUserCount();
 	}
+
 
 }
