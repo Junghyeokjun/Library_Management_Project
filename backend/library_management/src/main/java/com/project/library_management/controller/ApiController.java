@@ -5,10 +5,10 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,7 +21,6 @@ import com.project.library_management.dto.BookDto;
 import com.project.library_management.dto.LoanDto;
 import com.project.library_management.dto.SearchDto;
 import com.project.library_management.dto.UserDto;
-import com.project.library_management.mapper.UserMapper;
 import com.project.library_management.service.BookService;
 import com.project.library_management.service.GoogleCloudStorageService;
 import com.project.library_management.service.LoanService;
@@ -42,18 +41,12 @@ public class ApiController {
 	
 	@Autowired
 	private UserService userService;
-	
-	@GetMapping("/test/{category}")
-	public String test(@PathVariable("category") String category) {
-		return category;
-	}
 
 	// GET: /api/book?id=
 	// 도서번호에 해당하는 도서 정보 반환
 	@GetMapping("/book")
 	public BookDto getBook(@RequestParam long id) {
 		System.out.println(id);
-
 		return bookService.getBook(id);
 	}
 

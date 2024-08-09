@@ -27,12 +27,15 @@ export default function SignUp({ isAuthenticated, signUp }) {
     try {
       const name = data.get("firstName").concat(data.get("lastName"));
       console.log(name);
-      await signUp({
-        email: data.get("email"),
-        password: data.get("password"),
-        //한국인은 성이 앞에 오므로 lastName+fistName
-        userName: name,
-      });
+      await signUp(
+        {
+          email: data.get("email"),
+          password: data.get("password"),
+          //한국인은 성이 앞에 오므로 lastName+fistName
+          userName: name,
+        },
+        navigate
+      );
     } catch (e) {
       //후에 오류에 따라 처리
       setSignUpFail("중복된 이메일입니다.");

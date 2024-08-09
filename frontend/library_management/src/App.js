@@ -16,6 +16,7 @@ import { Route, Routes } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { tokenUpdate } from "@modules/auth";
 import HeaderContainer from "@containers/layout/HeaderContainer";
+import ErrorPageWrapper from "@pages/error/ErrorPage";
 function App() {
   const dispatch = useDispatch();
 
@@ -47,6 +48,7 @@ function App() {
           <Route path="/userlist" element={<UserListPage />}></Route>
           <Route path="/bookadd" element={<BookAddPage />}></Route>
           <Route path="/bookmodify/:id" element={<BookModifyPage />}></Route>
+          <Route path="/error" element={<ErrorPageWrapper />}></Route>
         </Routes>
       </Box>
       <Footer />
