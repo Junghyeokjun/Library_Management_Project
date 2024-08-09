@@ -20,7 +20,7 @@ const BooKDetailContainer = ({
   const { id } = useParams();
 
   const userId = token ? jwtDecode(token).id : 0;
-
+  console.log(userId);
   useEffect(() => {
     readBook(id);
     readLoan({ userid: userId, bookid: id });

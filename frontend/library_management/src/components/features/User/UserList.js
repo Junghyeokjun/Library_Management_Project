@@ -1,3 +1,5 @@
+import AlertDialog from "@components/common/AlertDialog";
+import ConfirmationDialog from "@components/common/ConfirmationDialog";
 import {
   Box,
   Button,
@@ -15,6 +17,10 @@ import React, { useState } from "react";
 
 const UserList = ({ users, pageCount, readUsers, removeUser }) => {
   const [currentPage, setCurrentPage] = useState(1);
+  const [choiceUserId, setChoiceUserId] = useState(0);
+  const [confirmDialogOpen, setConfirmDialogOpen] = useState(false);
+  const [alertDialogOpen, setAlerteDialogOpen] = useState(false);
+  const [alertMessage, setAlertMessage] = useState("error");
   //검색기능 추가시
 
   const [keyword, setKeyword] = useState("");
@@ -27,12 +33,20 @@ const UserList = ({ users, pageCount, readUsers, removeUser }) => {
   };
 
   const handelRemoveClick = async (id) => {
+    setChoiceUserId(id);
+    setConfirmDialogOpen(true);
+  };
+
+  const onHandleRemoveChange = async () => {
     try {
-      await removeUser(id);
+      await removeUser(choiceUserId);
       await readUsers({ page: currentPage });
     } catch (e) {
-      console.log(e);
+      setAlertMessage(e.response.data);
+      setAlerteDialogOpen(true);
+      setConfirmDialogOpen(false);
     }
+    setConfirmDialogOpen(false);
   };
 
   return (
@@ -88,6 +102,17 @@ const UserList = ({ users, pageCount, readUsers, removeUser }) => {
           shape="rounded"
         />
       </Box>
+      <ConfirmationDialog
+        open={confirmDialogOpen}
+        onClose={() => setConfirmDialogOpen(false)}
+        onConfirm={onHandleRemoveChange}
+        message={"삭제하시겠습니까?"}
+      />
+      <AlertDialog
+        open={alertDialogOpen}
+        handleClose={() => setAlerteDialogOpen(false)}
+        message={alertMessage}
+      />
     </>
   );
 };

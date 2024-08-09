@@ -5,6 +5,9 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 import org.springframework.lang.Nullable;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -31,16 +34,20 @@ public class BookDto {
 	private long bookId;
 
 	// 도서의 제목입니다.
+	@NotBlank(message = "제목이 입력되지 않았습니다.")
 	private String title;
 
+	@NotBlank(message = "저자가 입력되지 않았습니다.")
 	// 도서의 저자입니다.
 	private String author;
 
 	// 도서의 출판날짜입니다.
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-	private Date publishedDate;
+    @NotNull(message = "출판일이 입력되지 않았습니다.")
+    private Date publishedDate;
 
 	// 도서의 isbn 번호입니다.
+	@NotBlank(message = "isbn이 입력되지 않았습니다.")
 	private String isbn;
 
 	// 도서의 대출권수 입니다.
@@ -59,18 +66,22 @@ public class BookDto {
 	private String imagePath;
 
 	// 도서의 출판사입니다.
+	@NotBlank(message = "출판사가 입력되지 않았습니다.")
 	private String publisher;
 
 	// 도서 카테고리를 식별하는 ID입니다.
 	private long category;
 
 	// 도서 소개입니다
+	@NotBlank(message = "도서소개가 입력되지 않았습니다.")
 	private String bookIntro;
 
 	// 저자 소개입니다.
+	@NotBlank(message = "저자소개가 입력되지 않았습니다.")
 	private String authorIntro;
 
 	// 도서의 목차입니다.
+	@NotBlank(message = "목차가 입력되지 않았습니다.")
 	private String tableOfContents;
 	
 	// 도서의 카테고리 목록입니다. 더이상 사용하지 않습니다.

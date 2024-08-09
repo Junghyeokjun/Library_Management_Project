@@ -1,5 +1,6 @@
 import { deleteAuth, postAuth, putAuth } from "@lib/auth";
 import createRequestThunk from "@lib/createRequestThunk";
+import { jwtDecode } from "jwt-decode";
 
 const { handleActions } = require("redux-actions");
 
@@ -47,6 +48,7 @@ const auth = handleActions(
     [PUT_AUTH_SUCCESS]: (state, { payload }) => {
       const { token } = payload;
 
+      //실시간으로 토큰을 업데이트 하므로 대량의 주석을 발생
       localStorage.setItem("token", token);
 
       return { ...state, isAuthenticated: true, token: token };
@@ -55,7 +57,6 @@ const auth = handleActions(
       localStorage.removeItem("token");
       localStorage.removeItem("refreshToken");
 
-      //본래는 주석을 활성화해야하나 리렌더링 될때마다 실행되도록 했으므로 대량의 로그가 발생해 비활성화 합니다.
       console.log(PUT_AUTH_FAILURE);
       if (payload.message !== "토큰이 없습니다.") console.log(payload.message);
 

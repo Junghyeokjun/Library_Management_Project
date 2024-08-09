@@ -4,6 +4,7 @@ import React, { forwardRef } from "react";
 const MyPageTitle = forwardRef(({ children }, ref) => {
   return (
     <Typography
+      component="div"
       ref={ref}
       sx={{
         borderBottom: "1px solid black",

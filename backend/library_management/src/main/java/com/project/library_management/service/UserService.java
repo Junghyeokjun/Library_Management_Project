@@ -11,7 +11,10 @@ public interface UserService {
 	public UserDto getUser(long id);
 	
 	//해당 유저정보를 DB에 추가하는 메서드
-	public boolean createUser(UserDto user);
+	public boolean createUser(UserDto user) throws Exception;
+	
+	//해당 유저의 정보를 수정하는 메서드
+	public int updateUser(UserDto user) throws Exception;
 	
 	//해당 id를 가진 유저의 정보를 삭제하는 메서드
 	public int deleteUser(long id);
@@ -22,4 +25,6 @@ public interface UserService {
 	//해당 조건에 부합하는 유저의 총수를 반환하는 메서드
 	public long getUserCount();
 	
+
+		
 }

@@ -14,6 +14,7 @@ import {
 } from "@mui/material";
 import ImageIcon from "@mui/icons-material/Image";
 import { useNavigate } from "react-router-dom";
+import AlertDialog from "@components/common/AlertDialog";
 
 const categories = [
   { value: 1, label: "총류" },
@@ -47,6 +48,10 @@ const BookForm = ({ book, bookId, addBook, modifyBook, modified }) => {
   const [imagePreview, setImagePreview] = useState(
     modified ? book.imagePath : null
   );
+
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("error message");
+
   useEffect(() => {
     if (modified && book) {
       const {
@@ -78,8 +83,8 @@ const BookForm = ({ book, bookId, addBook, modifyBook, modified }) => {
   }, [book]);
 
   useEffect(() => {
-    setImagePreview(book.imagePath);
-  }, [book.imagePath]);
+    setImagePreview(book?.imagePath);
+  }, [book?.imagePath]);
   const handleChange = (e) => {
     const { name, value } = e.target;
     setBookDetails((prevDetails) => ({
@@ -117,7 +122,8 @@ const BookForm = ({ book, bookId, addBook, modifyBook, modified }) => {
       modified ? await modifyBook(formData) : await addBook(formData);
       navigate("/bookmanagement");
     } catch (error) {
-      console.log(error);
+      setErrorMessage(e.response.data);
+      setDialogOpen(true);
     }
   };
 
@@ -188,6 +194,7 @@ const BookForm = ({ book, bookId, addBook, modifyBook, modified }) => {
                 name="totalCopies"
                 type="number"
                 value={bookDetails.totalCopies}
+                inputProps={{ min: modified ? book.availableCopies : 0 }}
                 onChange={handleChange}
                 required
               />
@@ -286,6 +293,11 @@ const BookForm = ({ book, bookId, addBook, modifyBook, modified }) => {
           </Grid>
         </form>
       </Paper>
+      <AlertDialog
+        open={dialogOpen}
+        handleClose={() => setDialogOpen(false)}
+        message={errorMessage}
+      />
     </Container>
   );
 };

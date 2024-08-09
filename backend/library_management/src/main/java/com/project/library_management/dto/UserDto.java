@@ -2,6 +2,10 @@ package com.project.library_management.dto;
 
 import java.sql.Timestamp;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+
 import com.project.library_management.entity.User;
 
 import lombok.Getter;
@@ -19,12 +23,18 @@ public class UserDto {
 	private long userId;
 	
 	//유저의 이름입니다.
+	@NotBlank(message = "이름이 입력되지 않았습니다.")
 	private String userName;
 
 	//유저의 비밀번호 입니다.
+	@NotBlank(message = "패스워드가 입력되지 않았습니다.")
+    @Size(min = 6, message = "패스워드는 6자리 이상으로 입력해주세요.")
 	private String password;
 	
+	
 	//유저의 이메일 입니다.
+    @NotBlank(message = "이메일이 입력되지 않았습니다.")
+    @Email(message = "이메일의 형식에 맞춰주세요")
 	private String email;
 	
 	//유저의 권한입니다.
@@ -38,6 +48,9 @@ public class UserDto {
 	
 	//유저의 대출권수입니다.
 	private long loanCount;
+	
+	//유저의 정보를 업데이트 할때 쓰이는 옵션입니다. 유저와는 논리적으로 관계가 없습니다.
+	private String option;
 	
 	//User 엔티티를 이용해 데이터를 입력하는 세터함수입니다.
 	public void setUser(User user) {

@@ -63,7 +63,7 @@
                AND USER_ID = #{id}
            </if>
            <if test="returned">
-           	AND RETURN_DATE IS NULL
+           		AND RETURN_DATE IS NULL
            </if>
 
 	</select>

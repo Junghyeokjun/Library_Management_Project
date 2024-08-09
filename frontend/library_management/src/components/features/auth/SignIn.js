@@ -22,6 +22,19 @@ export default function SignIn({ isAuthenticated, login }) {
   const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
+    if (data.get("email") === "") {
+      setLoginFail("이메일을 입력해주세요");
+      return;
+    } else if (data.get("email").indexOf("@") === -1) {
+      setLoginFail("올바른 이메일을 입력해주세요");
+      return;
+    } else if (data.get("password") === "") {
+      setLoginFail("패스워드를 입력해주세요");
+      return;
+    } else if (data.get("password").length < 6) {
+      setLoginFail("올바른 패스워드를 입력해주세요");
+      return;
+    }
     try {
       await login({
         username: data.get("email"),

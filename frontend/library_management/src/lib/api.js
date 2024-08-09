@@ -172,6 +172,12 @@ export const postUser = (user) => {
   return postApi(url, user);
 };
 
+export const putUser = (user) => {
+  const url = new URL(apiLink + "user");
+
+  return putApi(url, user);
+};
+
 //유저 정보 삭제 메서드
 export const deleteUser = (id) => {
   const url = new URL(apiLink + "user");

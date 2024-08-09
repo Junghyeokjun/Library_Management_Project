@@ -1,3 +1,4 @@
+import ConfirmationDialog from "@components/common/ConfirmationDialog";
 import {
   Box,
   Button,
@@ -10,7 +11,7 @@ import {
   Typography,
 } from "@mui/material";
 import { jwtDecode } from "jwt-decode";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 const BookDetail = ({
@@ -47,25 +48,36 @@ const BookDetail = ({
       }(${availableCopies}/${totalCopies})`,
     },
   ];
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [message, setMessage] = useState("확인");
 
   const handleOnClick = async () => {
     if (isAuthenticated) {
-      try {
-        if (loan !== null && loan !== "") {
-          //반납
-          await modifyLoan({ loanId: loan.loanId, bookId: bookId });
-        } else {
-          //대출
-          await addLoan({ userId: userId, bookId: bookId });
-        }
-        await readBook(bookId);
-        await readLoan({ bookid: bookId, userid: userId });
-      } catch (e) {
-        console.log(e);
+      if (loan !== null && loan !== "") {
+        setMessage("반납하시겠습니까?");
+      } else {
+        setMessage("대여하시겠습니까?");
       }
+      setDialogOpen(true);
     } else {
       navigate("/login");
     }
+  };
+  const handleOnCinfirm = async () => {
+    try {
+      if (loan !== null && loan !== "") {
+        //반납
+        await modifyLoan({ loanId: loan.loanId, bookId: bookId });
+      } else {
+        //대출
+        await addLoan({ userId: userId, bookId: bookId });
+      }
+      await readBook(bookId);
+      await readLoan({ bookid: bookId, userid: userId });
+    } catch (e) {
+      console.log(e);
+    }
+    setDialogOpen(false);
   };
 
   return (
@@ -171,7 +183,7 @@ const BookDetail = ({
                 <Button
                   variant="contained"
                   sx={{ width: "100px", height: "40px" }}
-                  disabled={isDisabled}
+                  disabled={loan !== null && loan !== "" ? false : isDisabled}
                   onClick={() => handleOnClick()}
                 >
                   {loan ? "반납" : "대출"}
@@ -181,6 +193,12 @@ const BookDetail = ({
           </Container>
         </Box>
       </Box>
+      <ConfirmationDialog
+        open={dialogOpen}
+        onClose={() => setDialogOpen(false)}
+        onConfirm={handleOnCinfirm}
+        message={message}
+      />
     </Box>
   );
 };

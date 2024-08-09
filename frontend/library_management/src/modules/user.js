@@ -1,5 +1,5 @@
 import { handleActions } from "redux-actions";
-import { deleteUser, getUser, getUserList, postUser } from "@lib/api";
+import { deleteUser, getUser, getUserList, postUser, putUser } from "@lib/api";
 import createRequestThunk from "@lib/createRequestThunk";
 
 //유저정보를 획득하는 액션입니다.
@@ -11,6 +11,11 @@ const GET_USER_FAILURE = "user/GET_USER_FAILURE";
 const POST_USER = "user/POST_USER";
 const POST_USER_SUCCESS = "user/POST_USER_SUCCESS";
 const POST_USER_FAILURE = "user/POST_USER_FAILURE";
+
+//유저정보를 수정하는 액션입니다.
+const PUT_USER = "user/PUT_USER";
+const PUT_USER_SUCCESS = "user/PUT_USER_SUCCESS";
+const PUT_USER_FAILURE = "user/PUT_USER_FAILURE";
 
 //유저정보를 삭제하는 액션입니다.
 const DELETE_USER = "user/DELETE_USER";
@@ -24,6 +29,7 @@ const GET_USER_LIST_FAILURE = "user/GET_USER_LIST_FAILURE";
 
 export const readUser = createRequestThunk(GET_USER, getUser);
 export const addUser = createRequestThunk(POST_USER, postUser);
+export const modifyUser = createRequestThunk(PUT_USER, putUser);
 export const removeUser = createRequestThunk(DELETE_USER, deleteUser);
 export const readUsers = createRequestThunk(GET_USER_LIST, getUserList);
 
@@ -53,7 +59,18 @@ const user = handleActions(
       return state;
     },
     [POST_USER_FAILURE]: (state, { payload }) => {
-      console.log(GET_USER_FAILURE);
+      console.log(POST_USER_FAILURE);
+      console.log(payload);
+
+      return state;
+    },
+
+    // 유저정보 수정 메서드의 결과를 처리하는 리듀서 메서드입니다.
+    [PUT_USER_SUCCESS]: (state, { payload }) => {
+      return state;
+    },
+    [PUT_USER_FAILURE]: (state, { payload }) => {
+      console.log(PUT_USER_FAILURE);
       console.log(payload);
 
       return state;

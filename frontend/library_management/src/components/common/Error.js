@@ -2,6 +2,7 @@ import React from "react";
 import { Box, Typography } from "@mui/material";
 
 const Error = ({ errorTitle, errorDetails }) => {
+  console.log("eeee");
   return (
     <Box
       sx={{

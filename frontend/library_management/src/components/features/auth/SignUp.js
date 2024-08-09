@@ -25,8 +25,26 @@ export default function SignUp({ isAuthenticated, signUp }) {
     const data = new FormData(event.currentTarget);
 
     try {
-      const name = data.get("firstName").concat(data.get("lastName"));
-      console.log(name);
+      const name = data.get("lastName").concat(data.get("firstName"));
+
+      if (data.get("firstName") === "") {
+        setSignUpFail("이름이 입력되지 않았습니다.");
+        return;
+      } else if (data.get("email") === "") {
+        //추후 메일인증 추가시 인증방식으로 검사
+        setSignUpFail("이메일이 입력되지 않았습니다.");
+        return;
+      } else if (data.get("email").indexOf("@") === -1) {
+        setSignUpFail("이메일의 형식에 맞춰주세요.");
+        return;
+      } else if (data.get("password") === "") {
+        setSignUpFail("패스워드가 입력되지 않았습니다.");
+        return;
+      } else if (data.get("password").length < 6) {
+        setSignUpFail("패스워드는 6자리 이상으로 입력해주세요.");
+        return;
+      }
+
       await signUp(
         {
           email: data.get("email"),
@@ -37,8 +55,13 @@ export default function SignUp({ isAuthenticated, signUp }) {
         navigate
       );
     } catch (e) {
-      //후에 오류에 따라 처리
-      setSignUpFail("중복된 이메일입니다.");
+      if (e.response.status === 400) {
+        setSignUpFail(e.response.data);
+        return;
+      } else {
+        setSignUpFail(e.response.data);
+      }
+      return;
     }
 
     navigate("/");
@@ -97,7 +120,7 @@ export default function SignUp({ isAuthenticated, signUp }) {
                     required
                     fullWidth
                     id="lastName"
-                    label="성"
+                    label="성(선택)"
                     name="lastName"
                     autoComplete="family-name"
                   />

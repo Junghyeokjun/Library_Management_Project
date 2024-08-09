@@ -66,6 +66,17 @@
 		values(user_seq.nextval,#{userName},#{password},#{email})
 	</insert>
 	
+	<update id="updateUser" parameterType="UserDto">
+		update users set
+		<if test="option.equals('email')">
+		email=#{email}
+		</if>	
+		<if test="option.equals('password')">
+		password = #{password} 	
+		</if>
+		where USER_ID=#{userId}
+	</update>
+	
 	<delete id="deleteUser" parameterType="long">
 		delete from users where user_id=#{id}
 	</delete>

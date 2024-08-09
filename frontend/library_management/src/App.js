@@ -48,7 +48,7 @@ function App() {
           <Route path="/userlist" element={<UserListPage />}></Route>
           <Route path="/bookadd" element={<BookAddPage />}></Route>
           <Route path="/bookmodify/:id" element={<BookModifyPage />}></Route>
-          <Route path="/error" element={<ErrorPageWrapper />}></Route>
+          <Route path="*" element={<ErrorPageWrapper />}></Route>
         </Routes>
       </Box>
       <Footer />
