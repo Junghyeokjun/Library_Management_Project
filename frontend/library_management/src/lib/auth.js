@@ -4,7 +4,7 @@
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
 
-const authLink = "http://localhost:8282/auth/";
+const authLink = "/auth/";
 
 //데이터베이스에 일치하는 유저정보를 보낼경우 인증을 해주는 메서드입니다.(로그인)
 export const postAuth = (credentials) => {
