@@ -17,7 +17,7 @@ public class BookServiceImpl implements BookService {
 
 	@Autowired
 	private BookMapper bookMapper;
-
+	
 	@Override
 	public BookDto getBook(long id) {
 		BookDto book = new BookDto();

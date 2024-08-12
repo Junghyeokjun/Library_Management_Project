@@ -1,5 +1,4 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import Footer from "@components/layout/Footer";
 import MainPage from "@pages/book/MainPage";
 import SignInPage from "@pages/auth/SignInPage";
