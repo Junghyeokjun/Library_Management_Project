@@ -2,7 +2,7 @@ import React from "react";
 import { useLocation } from "react-router-dom";
 import Error from "@components/common/Error";
 
-const ErrorPageWrapper = () => {
+const ErrorPage = () => {
   const location = useLocation();
   const { errorTitle, errorDetails } = location.state || {
     errorTitle: "404 Not Found",
@@ -12,4 +12,4 @@ const ErrorPageWrapper = () => {
   return <Error errorTitle={errorTitle} errorDetails={errorDetails} />;
 };
 
-export default ErrorPageWrapper;
+export default ErrorPage;
