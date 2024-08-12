@@ -1,0 +1,59 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./backend/library_management
+      dockerfile: Dockerfile
+    ports:
+      - "8282:8282"  # Nginx에서 참조하는 포트와 일치시킵니다.
+    networks:
+      - app-network
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:oracle:thin:@db:1522/ORCLPDB1
+      SPRING_DATASOURCE_USERNAME: system
+      SPRING_DATASOURCE_PASSWORD: 1234
+      SPRING_DATASOURCE_DRIVER_CLASS_NAME: oracle.jdbc.OracleDriver
+    depends_on:
+      - db
+
+  frontend:
+    build:
+      context: ./frontend/library_management
+      dockerfile: Dockerfile
+    # 포트 매핑 제거 (Nginx가 포트 80을 사용)
+    networks:
+      - app-network
+
+  db:
+    image: oracle/database:19.3.0
+    environment: 
+      ORACLE_SID: ORCLCDB
+      ORACLE_PDB: ORCLPDB1
+      ORACLE_PWD: 1234
+    ports:
+      - "1522:1521"
+      - "5500:5500"
+    volumes:
+      - db_data:/opt/oracle/oradata
+    networks:
+      - app-network
+
+  nginx:
+    image: nginx:latest
+    ports:
+      - "80:80"  # 호스트의 80번 포트를 Nginx가 사용
+    networks:
+      - app-network
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - frontend
+      - backend
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  db_data:
