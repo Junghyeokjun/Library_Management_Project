@@ -1,4 +1,4 @@
-import { Box, css, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import React from "react";
 import { Link } from "react-router-dom";
 
@@ -17,6 +17,7 @@ const LoanStatus = ({ loans }) => {
             borderRadius: "10px",
             lineHeight: "267px",
             textAlign: "center",
+            fontSize: { xs: "1.5rem", sm: "2rem", md: "2.5rem" }, // 글씨 크기 조정
           }}
         >
           대여한 책이 없습니다
@@ -28,7 +29,8 @@ const LoanStatus = ({ loans }) => {
             borderRadius: "10px",
             flexGrow: 1,
             display: "flex",
-            justifyContent: "space-evenly",
+            justifyContent: { xs: "center", md: "space-evenly" },
+            flexWrap: "wrap",
             pt: 1,
           }}
         >
@@ -36,25 +38,38 @@ const LoanStatus = ({ loans }) => {
             <Box
               key={loan.loanId}
               sx={{
-                width: "150px",
+                width: { xs: "100px", sm: "130px", md: "150px" },
                 display: "flex",
                 flexDirection: "column",
                 textAlign: "center",
+                marginBottom: "15px", // Add some spacing between items
               }}
             >
               <Link
                 to={`/bookdetail/${loan.bookId}`}
                 style={{ textDecoration: "none" }}
               >
-                <img src={loan.imagePath} alt="" width="150px" height="235px" />
+                <img
+                  src={loan.imagePath}
+                  alt=""
+                  width="100%"
+                  height="auto"
+                  style={{
+                    maxHeight: "235px",
+                    objectFit: "cover",
+                    borderRadius: "5px",
+                  }}
+                />
                 <Typography
-                  variant="h5"
+                  variant="h6"
                   sx={{
                     whiteSpace: "nowrap",
                     overflow: "hidden",
                     textOverflow: "ellipsis",
-                    width: "150px",
+                    width: "100%",
                     color: "black",
+                    fontSize: { xs: "12px", sm: "14px", md: "16px" },
+                    marginTop: "8px",
                   }}
                 >
                   {loan.title}

@@ -16,13 +16,26 @@ import {
   Typography,
 } from "@mui/material";
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Subtitle from "@components/common/SubTitle";
 import ConfirmationDialog from "@components/common/ConfirmationDialog";
 import AlertDialog from "@components/common/AlertDialog";
+import { jwtDecode } from "jwt-decode";
 
-const BookManagement = (book) => {
-  const { bookList, pageCount, readBooks, removeBook } = book;
+const BookManagement = ({
+  bookList,
+  pageCount,
+  readBooks,
+  removeBook,
+  token,
+  isAuthenticated,
+}) => {
+  const navigite = useNavigate();
+  const role = token ? jwtDecode(token).role : false;
+  if (!isAuthenticated && !(role[0]?.authority === "ROLE_ADMIN")) {
+    navigite("/");
+  }
+
   const [currentPage, setCurrentPage] = useState(1);
   const [keyword, setKeyword] = useState("");
   const [option, setOption] = useState("title");
@@ -71,11 +84,27 @@ const BookManagement = (book) => {
   return (
     <>
       <Subtitle>
-        <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            flexDirection: { xs: "column", sm: "row" },
+            pl: 1,
+          }}
+        >
           {"도서관리"}
 
-          <Box sx={{ display: "flex" }}>
-            <FormControl variant="outlined" sx={{ minWidth: 120, mr: 1 }}>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: { xs: "column", sm: "row" },
+              mt: { xs: 2, sm: 0 },
+            }}
+          >
+            <FormControl
+              variant="outlined"
+              sx={{ minWidth: 120, mr: { sm: 1, xs: 0 }, mb: { xs: 2, sm: 0 } }}
+            >
               <InputLabel>검색 유형</InputLabel>
               <Select
                 value={option}
@@ -92,12 +121,12 @@ const BookManagement = (book) => {
               variant="outlined"
               value={inputKeyword}
               onChange={(event) => setInputKeyword(event.target.value)}
-              sx={{ mr: 1 }}
+              sx={{ mr: { sm: 1, xs: 0 }, mb: { xs: 2, sm: 0 } }}
             />
             <Button
               variant="contained"
               onClick={handleSearchClick}
-              sx={{ minWidth: "93.5px", mr: 4 }}
+              sx={{ minWidth: "93.5px" }}
             >
               검색
             </Button>
@@ -137,23 +166,35 @@ const BookManagement = (book) => {
                 </TableCell>
                 <TableCell>{book.author}</TableCell>
                 <TableCell>{book.publishedDate}</TableCell>
-                <TableCell sx={{ width: "100px" }}>
+                <TableCell sx={{ width: { sm: "100px", xs: "auto" } }}>
                   <Button
                     variant="contained"
                     color="warning"
-                    sx={{ width: "100px", height: "40px" }}
+                    sx={{
+                      width: { sm: "100px", xs: "100%" },
+                      height: "40px",
+                      mb: { xs: 2, sm: 0 },
+                    }}
                     component={Link}
                     to={`/bookmodify/${book.bookId}`}
                   >
                     수정
                   </Button>
                 </TableCell>
-                <TableCell align="right" sx={{ width: "100px" }}>
+                <TableCell
+                  align="right"
+                  sx={{ width: { sm: "100px", xs: "auto" } }}
+                >
                   <Button
                     variant="contained"
                     color="error"
                     onClick={() => onHandleRemoveChange(book.bookId)}
-                    sx={{ width: "100px", height: "40px", mx: 2 }}
+                    sx={{
+                      width: { sm: "100px", xs: "64px" },
+                      height: "40px",
+                      mx: 2,
+                      mb: { xs: 2, sm: 0 },
+                    }}
                   >
                     삭제
                   </Button>
@@ -163,18 +204,26 @@ const BookManagement = (book) => {
           </TableBody>
         </Table>
       </TableContainer>
-      <Box sx={{ display: "flex", justifyContent: "space-between", my: 2 }}>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          flexDirection: "column",
+          my: 2,
+        }}
+      >
         <Box></Box>
         <Pagination
           count={pageCount}
           page={currentPage}
           onChange={onHandlePageChange}
           shape="rounded"
+          sx={{ mb: { xs: 2, sm: 0 } }}
         />
         <Box>
           <Button
             variant="contained"
-            sx={{ mr: 4 }}
+            sx={{ mr: 4, width: { sm: "auto", xs: "100%" } }}
             component={Link}
             to={"/bookadd"}
           >

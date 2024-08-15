@@ -35,24 +35,45 @@ const LoanHistory = ({ loans, pageCount, readLoans }) => {
       ) : (
         <>
           <TableContainer
-            sx={{ border: "1px solid #eee", borderRadius: "10px" }}
+            sx={{
+              border: "1px solid #eee",
+              borderRadius: "10px",
+              overflowX: "auto",
+            }}
           >
             <Table size="small">
               <TableHead>
                 <TableRow>
                   <TableCell>제목</TableCell>
                   <TableCell>저자</TableCell>
-                  <TableCell>대여일</TableCell>
-                  <TableCell align="right">반납일</TableCell>
+                  <TableCell sx={{ whiteSpace: "nowrap" }}>대여일</TableCell>
+                  <TableCell sx={{ whiteSpace: "nowrap" }} align="right">
+                    반납일
+                  </TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
                 {loans.map((loan) => (
                   <TableRow key={loan.loanId}>
-                    <TableCell>{loan.title}</TableCell>
+                    <TableCell>
+                      <Typography
+                        sx={{
+                          whiteSpace: "nowrap",
+                          overflow: "hidden",
+                          textOverflow: "ellipsis",
+                          maxWidth: { xs: "100px", sm: "200px" },
+                        }}
+                      >
+                        {loan.title}
+                      </Typography>
+                    </TableCell>
                     <TableCell>{loan.author}</TableCell>
-                    <TableCell>{loan.loanDate}</TableCell>
-                    <TableCell align="right">{loan.returnDate}</TableCell>
+                    <TableCell sx={{ whiteSpace: "nowrap" }}>
+                      {loan.loanDate}
+                    </TableCell>
+                    <TableCell sx={{ whiteSpace: "nowrap" }} align="right">
+                      {loan.returnDate}
+                    </TableCell>
                   </TableRow>
                 ))}
               </TableBody>

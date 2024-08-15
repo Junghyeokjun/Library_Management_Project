@@ -3,7 +3,14 @@ import { connect } from "react-redux";
 import { readUsers, removeUser } from "@modules/user";
 import UserList from "@components/features/user/UserList";
 
-const UserListContainer = ({ users, pageCount, readUsers, removeUser }) => {
+const UserListContainer = ({
+  users,
+  pageCount,
+  readUsers,
+  removeUser,
+  token,
+  isAuthenticated,
+}) => {
   console.log(pageCount);
   useEffect(() => {
     readUsers({});
@@ -14,12 +21,19 @@ const UserListContainer = ({ users, pageCount, readUsers, removeUser }) => {
       pageCount={pageCount}
       readUsers={readUsers}
       removeUser={removeUser}
+      token={token}
+      isAuthenticated={isAuthenticated}
     />
   );
 };
 
 export default connect(
-  ({ user }) => ({ users: user.users, pageCount: user.pageCount }),
+  ({ user, auth }) => ({
+    users: user.users,
+    pageCount: user.pageCount,
+    token: auth.token,
+    isAuthenticated: auth.isAuthenticated,
+  }),
   {
     readUsers,
     removeUser,

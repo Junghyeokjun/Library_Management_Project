@@ -16,6 +16,11 @@ const BookIntro = ({ book }) => {
 
   const IntroBtn = styled(Button)(() => ({
     width: "200px",
+    "@media (max-width: 600px)": {
+      // 모바일 화면에서 버튼 크기 조정
+      width: "100px",
+      fontSize: "12px",
+    },
   }));
 
   //소개글 내용 태그입니다.

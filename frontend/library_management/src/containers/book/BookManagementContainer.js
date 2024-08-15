@@ -1,15 +1,15 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import BookManagement from "@components/features/book/BookManagement";
-import { addBook, modifyBook, readBooks, removeBook } from "@modules/book";
+import { readBooks, removeBook } from "@modules/book";
 
 const BooKManagementContainer = ({
   bookList,
   pageCount,
   readBooks,
-  addBook,
-  modifyBook,
   removeBook,
+  token,
+  isAuthenticated,
 }) => {
   useEffect(() => {
     readBooks({});
@@ -20,15 +20,20 @@ const BooKManagementContainer = ({
         bookList={bookList}
         pageCount={pageCount}
         readBooks={readBooks}
-        addBook={addBook}
-        modifyBook={modifyBook}
         removeBook={removeBook}
+        token={token}
+        isAuthenticated={isAuthenticated}
       />
     </>
   );
 };
 
 export default connect(
-  ({ book }) => ({ bookList: book.bookList, pageCount: book.pageCount }),
-  { readBooks, addBook, modifyBook, removeBook }
+  ({ book, auth }) => ({
+    bookList: book.bookList,
+    pageCount: book.pageCount,
+    token: auth.token,
+    isAuthenticated: auth.isAuthenticated,
+  }),
+  { readBooks, removeBook }
 )(BooKManagementContainer);

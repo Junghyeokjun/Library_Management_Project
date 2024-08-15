@@ -10,9 +10,8 @@ import {
   TableRow,
   Typography,
 } from "@mui/material";
-import { jwtDecode } from "jwt-decode";
-import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const BookDetail = ({
   userId,
@@ -84,6 +83,7 @@ const BookDetail = ({
     <Box
       sx={{
         width: "100vw",
+        padding: "16px", // 모바일 환경에서 여백 추가
       }}
     >
       <Box
@@ -109,10 +109,11 @@ const BookDetail = ({
         >
           <Container
             sx={{
-              width: "75%",
+              width: { xs: "100%", md: "75%" }, // 모바일에서는 전체 너비 사용
               py: 5,
               display: "flex",
-              alignItems: "start",
+              flexDirection: { xs: "column", md: "row" }, // 모바일에서는 세로 정렬
+              alignItems: { xs: "center", md: "start" }, // 모바일에서 중앙 정렬
             }}
           >
             <img
@@ -123,23 +124,29 @@ const BookDetail = ({
                 height: "370px",
                 border: "1px solid #ccc",
                 boxShadow: "2px 2px #ccc",
+                marginBottom: "16px", // 모바일 환경에서 아래 여백 추가
               }}
             />
-            <Box sx={{ flexGrow: 1, pl: 2 }}>
-              <p
-                style={{
+            <Box sx={{ flexGrow: 1, pl: { xs: 0, md: 2 } }}>
+              <Typography
+                variant="h5" // 반응형 폰트 크기 적용
+                sx={{
                   borderBottom: "1px solid black",
-                  fontSize: "2rem",
                   lineHeight: 1,
                   marginTop: 5,
                   paddingBottom: 5,
                 }}
               >
                 {title}
-              </p>
+              </Typography>
 
               <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-                <TableContainer sx={{ backgroundColor: "#eee", width: "70%" }}>
+                <TableContainer
+                  sx={{
+                    backgroundColor: "#eee",
+                    width: { xs: "100%", md: "70%" }, // 모바일에서는 전체 너비 사용
+                  }}
+                >
                   <Table>
                     <TableBody>
                       {details.map((detail, index) => (
