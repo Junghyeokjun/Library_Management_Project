@@ -18,12 +18,14 @@ class LoanMapperTest {
 	
 	@Disabled
 	@Test
+	//대출정보 획득 테스트
 	public void selectLoanTest() {
 		System.out.println(loanMapper.selectLoan(1, 4));
 	}
 	
 	@Disabled
 	@Test
+	//대출정보 리스트 획득 테스트
 	public void selectLoansTest() {
 		SearchDto search=new SearchDto();
 		for (LoanDto loan : loanMapper.selectLoans(search)) {
@@ -33,6 +35,7 @@ class LoanMapperTest {
 
 	@Disabled
 	@Test
+	//조건을 충족하는 대출정보 총 개수 획득 테스트
 	public void selectLoanCountTest() {
 		SearchDto search=new SearchDto();
 		System.out.println(loanMapper.selectLoanCount(search));
@@ -41,6 +44,7 @@ class LoanMapperTest {
 	
 	@Disabled
 	@Test
+	//대출정보 삽입 테스트
 	public void insertLoanTest() {
 		LoanDto loan= new LoanDto();
 		loan.setUserId(1);
@@ -51,6 +55,7 @@ class LoanMapperTest {
 
 	@Disabled
 	@Test
+	//대출정보 수정 테스트
 	public void updateLoanTest() {
 		System.out.println(loanMapper.updateLoan(3));
 		
@@ -58,6 +63,7 @@ class LoanMapperTest {
 	
 	@Disabled
 	@Test
+	//대출시 도서 현재 수량 반영 테스트
 	public void updateCopiesTest() {
 		System.out.println(loanMapper.updateCopies(1, LoanAvailabilityOption.LOAN_LOAN));
 		System.out.println(loanMapper.updateCopies(1, LoanAvailabilityOption.LOAN_RETURN));
