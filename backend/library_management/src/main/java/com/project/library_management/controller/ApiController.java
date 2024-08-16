@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -28,8 +29,11 @@ import com.project.library_management.service.GoogleCloudStorageService;
 import com.project.library_management.service.LoanService;
 import com.project.library_management.service.UserService;
 
+import lombok.extern.slf4j.Slf4j;
+
 @RestController
 @RequestMapping("/api")
+@Slf4j
 public class ApiController {
 
 	@Autowired
@@ -43,7 +47,7 @@ public class ApiController {
 	
 	@Autowired
 	private UserService userService;
-
+	
 	// GET: /api/book?id=
 	// 도서번호에 해당하는 도서 정보 반환
 	@GetMapping("/book")
@@ -146,8 +150,8 @@ public class ApiController {
 	// 해당 조건에 맞는 도서 정보 리스트 반환
 	@GetMapping("/booklist")
 	public ResponseEntity<Map<String, Object>> getBookList(@ModelAttribute SearchDto search) {
-		System.out.println(search);
-
+		System.out.println(search);        
+        
 		Map<String, Object> booksData = new HashMap<String, Object>();
 
 		List<BookDto> books = bookService.getBooks(search);

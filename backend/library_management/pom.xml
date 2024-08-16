@@ -82,11 +82,19 @@
 		    <groupId>org.springframework.boot</groupId>
 		    <artifactId>spring-boot-starter-validation</artifactId>
 		</dependency>		
-		<dependency>
+		<!-- <dependency>
 			<groupId>oracle</groupId>
 			<artifactId>ojdbc6</artifactId>
 			<version>11.2.0.3</version>
 		</dependency>
+		 -->
+		 <!-- 빌드용 jdbc -->
+		<dependency>
+		    <groupId>com.oracle.database.jdbc</groupId>
+		    <artifactId>ojdbc8</artifactId>
+		    <version>19.8.0.0</version> 
+		</dependency>
+		
 		<!-- Other dependencies -->
 		<dependency>
 			<groupId>com.google.cloud</groupId>
