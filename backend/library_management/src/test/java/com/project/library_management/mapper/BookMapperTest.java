@@ -25,6 +25,7 @@ class BookMapperTest {
 
 	@Disabled
 	@Test
+	//도서 정보 리스트 획득 테스트
 	public void selectBooksTest() {
 		assertNotNull(bookMapper);
 		SearchDto search=new SearchDto();
@@ -39,11 +40,13 @@ class BookMapperTest {
 	
 	@Disabled
 	@Test
+	//도서 정보 획득 테스트
 	public void selectBookTest() {
 	
 		System.out.println(bookMapper.selectBook(3).getTitle());
 	}
 
+	@Disabled
 	@Test
 	public void selectBookCount() {
 		SearchDto search=new SearchDto();
