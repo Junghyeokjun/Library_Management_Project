@@ -25,6 +25,7 @@ class BookMapperTest {
 
 	@Disabled
 	@Test
+	//도서 정보 리스트 획득 테스트
 	public void selectBooksTest() {
 		assertNotNull(bookMapper);
 		SearchDto search=new SearchDto();
@@ -39,12 +40,15 @@ class BookMapperTest {
 	
 	@Disabled
 	@Test
+	//도서 정보 획득 테스트
 	public void selectBookTest() {
 	
 		System.out.println(bookMapper.selectBook(3).getTitle());
 	}
 
+	@Disabled
 	@Test
+	//조건에 맞는 도서 총 개수 획득 메서드
 	public void selectBookCount() {
 		SearchDto search=new SearchDto();
 		System.out.println(bookMapper.selectBookCount(search));
@@ -54,6 +58,7 @@ class BookMapperTest {
 	@Disabled
 	@Test
 	@Transactional
+	//도서정보 삽입 테스트
 	public void insertBookTest() {
 		BookDto book=new BookDto();
 		book.setTitle("핵의 역사");
@@ -73,6 +78,7 @@ class BookMapperTest {
 	
 	@Disabled
 	@Test
+	//도서정보 수정 테스트
 	public void updateBookTest() {
 		BookDto book=new BookDto();
 		book.setBookId(15);
@@ -92,6 +98,7 @@ class BookMapperTest {
 	
 	@Disabled
 	@Test
+	//도서정보 삭제 테스트
 	public void deleteBookTest() {
 		System.out.println(bookMapper.deleteBook(15));
 	}
